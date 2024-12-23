@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ToastContainer, toast } from "react-toastify";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Analyzer from "./pages/Analyzer";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AppLayout from "./pages/AppLayout";
+import Home from "./pages/Home";
+import WebsiteDetail from "./pages/WebsiteDetail";
+import Dashboard from "./pages/Dashboard";
+import PersonalInformation from "./pages/PersonalInformation";
+import Security from "./pages/Security";
+import Login from "./pages/Login";
+import Signup from "./pages/SignUp";
+import PageNotFound from "./pages/PageNotFound";
 
-function App() {
-  const [count, setCount] = useState(0)
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#42d392",
+      tint1: "#88d6b3",
+      tint2: "#a5cbba",
+      shade1: "#02d878",
+      shade2: "#039c57",
+    },
+    secondary: {
+      main: "#589cd9",
+      tint1: "#70a6d5",
+      tint2: "#8ab2d5",
+      shade1: "#268be3",
+      shade2: "#3f92db",
+    },
+  },
+});
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-export default App
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<Home />} />
+            <Route path={"/websites/:websiteID"} element={<WebsiteDetail />} />
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route index element={<PersonalInformation />} />
+              <Route
+                path="personal-information"
+                element={<PersonalInformation />}
+              />
+              <Route path="security" element={<Security />} />
+              <Route path="analyze" element={<Analyzer />} />
+            </Route>
+          </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        limit={10}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss={true}
+        draggable={true}
+        pauseOnHover={true}
+        theme={"light"}
+        transition:Slide
+      />
+    </ThemeProvider>
+  );
+}
