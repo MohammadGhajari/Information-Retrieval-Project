@@ -12,8 +12,16 @@ import Security from "./pages/Security";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import PageNotFound from "./pages/PageNotFound";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "./styles/base.module.css";
 
 const theme = createTheme({
+  typography: {
+    fontSize: 20,
+  },
   palette: {
     primary: {
       main: "#42d392",

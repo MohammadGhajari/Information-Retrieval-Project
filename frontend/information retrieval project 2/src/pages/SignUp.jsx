@@ -1,3 +1,57 @@
+import LoginForm from "../components/login-signup/LoginForm";
+import styles from "./../styles/signup.module.css";
+import { isEmail } from "validator";
+import { useState } from "react";
+import { toastError } from "../services/notify";
+
 export default function Signup() {
-  return <h1>signup</h1>;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordConfirmError, setPasswordConfirmError] = useState(false);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    setEmailError(false);
+    setPasswordError(false);
+    setPasswordConfirmError(false);
+
+    if (!isEmail(email)) {
+      setEmailError(true);
+      toastError("Invalid email address.");
+      return;
+    }
+    if (password.length < 8) {
+      setPasswordError(true);
+      toastError("Password length must be at least 8 characters.");
+      return;
+    }
+    if (password !== passwordConfirm) {
+      setPasswordError(true);
+      setPasswordConfirmError(true);
+      toastError("Password and password confirm must be the same.");
+      return;
+    }
+
+    //then sign up
+  }
+
+  return (
+    <div className={styles.container}>
+      <LoginForm
+        type={"signup"}
+        onSubmit={handleSubmit}
+        setEmail={setEmail}
+        setPassword={setPassword}
+        setPasswordConfirm={setPasswordConfirm}
+        emailError={emailError}
+        passwordError={passwordError}
+        passwordConfirmError={passwordConfirmError}
+      />
+    </div>
+  );
 }
