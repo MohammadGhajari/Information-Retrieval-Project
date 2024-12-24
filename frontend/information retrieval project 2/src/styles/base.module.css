@@ -39,6 +39,13 @@
   --border-radius-sm: 5px;
   --border-radius-md: 7px;
   --border-radius-lg: 9px;
+
+  --gradient-horizontal-footer: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  --gradient-vertical-footer: linear-gradient(to bottom, #68c368, #b9e3b9);
 }
 
 *,
