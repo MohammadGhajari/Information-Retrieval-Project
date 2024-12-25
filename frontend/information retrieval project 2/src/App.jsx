@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import AddWebsite from "./pages/AddWebsite";
 import PageNotFound from "./pages/PageNotFound";
+import AddKeyword from "./pages/AddKeyword";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
@@ -59,6 +60,7 @@ export default function App() {
                 element={<PersonalInformation />}
               />
               <Route path="security" element={<Security />} />
+              <Route path="add-keyword" element={<AddKeyword />} />
               <Route path="analyze" element={<Analyzer />} />
             </Route>
           </Route>
