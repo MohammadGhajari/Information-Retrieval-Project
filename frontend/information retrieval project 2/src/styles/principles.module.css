@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  width: 80%;
+}
+.container header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+
+  & > h1 {
+    font-size: 4rem;
+  }
+}
+.container header .description-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 80%;
+  & p {
+    text-align: center;
+    font-size: 1.6rem;
+  }
+}
+
+.container .features-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+.container .features-container .feature-container .description-container p {
+  line-height: 1.7;
+}
+.container .features-container .feature-container {
+  display: flex;
+  height: 30rem;
+  gap: 3rem;
+}
+.svg-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.container .features-container .feature-container .svg-container img {
+  height: 100%;
+}
+.feature-container .description-container p {
+  font-size: 1.6rem;
+}

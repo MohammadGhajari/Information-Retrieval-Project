@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  & > h1 {
+    width: 60%;
+    align-self: center;
+    text-align: center;
+    /* font-size: 3.4rem; */
+  }
+}
+.svg-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 5rem;
+}

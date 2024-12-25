@@ -85,7 +85,7 @@ export default function Footer() {
         </div>
       </div>
       <div className={styles["copyright"]}>
-        Copyright Luthien © {new Date().getFullYear()}. All rights reserved.
+        Copyright 💀SAMADI💀 © {new Date().getFullYear()}. All rights reserved.
       </div>
     </footer>
   );

@@ -1,3 +1,4 @@
+import styles from "./../../styles/main-container.module.css";
 export default function MainContainer({ children }) {
-  return <div>{children}</div>;
+  return <div className={styles["container"]}>{children}</div>;
 }
