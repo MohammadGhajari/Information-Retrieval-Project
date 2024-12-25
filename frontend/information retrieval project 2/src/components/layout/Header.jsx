@@ -11,6 +11,7 @@ import { MdOutlineLogout } from "react-icons/md";
 import { IoSunnyOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -69,10 +70,10 @@ export default function Header() {
                     <MdOutlineDashboardCustomize />
                   </span>
                 </NavLink>
-                <NavLink className={styles["nav-btn"]} to="/favorites">
-                  <span>Favorite</span>
+                <NavLink className={styles["nav-btn"]} to="/add-website">
+                  <span>Add Website</span>
                   <span>
-                    <MdFavoriteBorder />
+                    <IoAddCircleOutline />
                   </span>
                 </NavLink>
                 <button className={styles["nav-btn"]}>

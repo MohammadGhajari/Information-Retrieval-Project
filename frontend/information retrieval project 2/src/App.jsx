@@ -11,6 +11,7 @@ import PersonalInformation from "./pages/PersonalInformation";
 import Security from "./pages/Security";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
+import AddWebsite from "./pages/AddWebsite";
 import PageNotFound from "./pages/PageNotFound";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -50,6 +51,7 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route index element={<Home />} />
             <Route path={"/websites/:websiteID"} element={<WebsiteDetail />} />
+            <Route path={"/add-website"} element={<AddWebsite />} />
             <Route path="/dashboard" element={<Dashboard />}>
               <Route index element={<PersonalInformation />} />
               <Route

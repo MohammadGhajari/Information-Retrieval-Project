@@ -22,7 +22,8 @@
   width: 80%;
   & p {
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+    font-weight: 600;
   }
 }
 
@@ -48,4 +49,6 @@
 }
 .feature-container .description-container p {
   font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--color-grey-3);
 }
