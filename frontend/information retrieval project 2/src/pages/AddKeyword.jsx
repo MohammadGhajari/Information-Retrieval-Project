@@ -29,6 +29,8 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 export default function AddKeyword() {
+  const [file, setFile] = useState(null);
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -39,6 +41,13 @@ export default function AddKeyword() {
       },
     },
   };
+  function handleChangeUpload(e) {
+    setFile(e.target.files[0]);
+  }
+  function handleDeleteFile() {
+    setFile(null);
+  }
+
   const names = [
     "Oliver Hansen",
     "Van Henry",
@@ -71,7 +80,7 @@ export default function AddKeyword() {
           </InputLabel>
           <Select
             required={true}
-            size="small"
+            // size="small"
             labelId="demo-multiple-checkbox-label"
             id="demo-multiple-checkbox"
             multiple
@@ -94,7 +103,7 @@ export default function AddKeyword() {
           variant="outlined"
           required
           fullWidth
-          size="small"
+          // size="small"
         />
         <div className={styles["file-upload-container"]}>
           <label>Upload file (optional):</label>
@@ -107,20 +116,18 @@ export default function AddKeyword() {
               startIcon={<CloudUploadIcon />}
             >
               Upload file
-              <VisuallyHiddenInput
-                type="file"
-                onChange={(event) => console.log(event.target.files)}
-                multiple
-              />
+              <VisuallyHiddenInput type="file" onChange={handleChangeUpload} />
             </Button>
-            <div className={styles["file-content"]}>
-              <span>
-                <FaFileCsv />
-              </span>
-              <span>
-                <RiDeleteBin6Line />
-              </span>
-            </div>
+            {file && (
+              <div className={styles["file-content"]}>
+                <span>
+                  <FaFileCsv />
+                </span>
+                <span>
+                  <RiDeleteBin6Line onClick={handleDeleteFile} />
+                </span>
+              </div>
+            )}
           </div>
         </div>
         <Button variant="contained" color="primary" size="large">
