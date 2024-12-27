@@ -27,7 +27,15 @@ export default function Header() {
           to={"/"}
           style={{ marginLeft: "1rem", fontSize: "3rem", fontWeight: "bold" }}
         >
-          💀SAMADI💀
+          {/* 💀SAMADI💀 */}
+          SAMADI
+          <img
+            // src="https://static-00.iconduck.com/assets.00/penis-yellow-emoji-512x501-azqxh2dc.png"
+            src="https://static-00.iconduck.com/assets.00/penis-black-emoji-512x501-2l9h76i7.png"
+            alt="cock"
+            height={40}
+            width={50}
+          />
         </NavLink>
         <button className={styles["darkmode-btn"]}>
           {isDarkMode ? <IoSunnyOutline /> : <FaRegMoon />}

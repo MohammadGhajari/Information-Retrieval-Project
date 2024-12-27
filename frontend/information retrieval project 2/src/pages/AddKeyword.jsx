@@ -14,6 +14,7 @@ import { FaFileCsv } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FormControl from "@mui/material/FormControl";
+import { MenuProps } from "../services/helper";
 
 import { styled } from "@mui/material/styles";
 
@@ -31,16 +32,6 @@ const VisuallyHiddenInput = styled("input")({
 export default function AddKeyword() {
   const [file, setFile] = useState(null);
 
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
   function handleChangeUpload(e) {
     setFile(e.target.files[0]);
   }

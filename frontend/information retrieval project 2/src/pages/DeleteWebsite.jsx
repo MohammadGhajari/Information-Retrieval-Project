@@ -84,7 +84,6 @@ const DeleteWebsite = () => {
   };
 
   const handleDelete = () => {
-    console.log(`Deleted website: ${website.domain}`);
     setWebsite(null);
     setModalOpen(false);
   };

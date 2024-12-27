@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+.custom-tooltip {
+  border-radius: var(--border-radius-sm);
+  padding: 1rem;
+  background-color: rgba(112, 166, 213, 0.5);
+  box-shadow: var(--shadow-sm);
+}

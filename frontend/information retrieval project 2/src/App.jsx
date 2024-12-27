@@ -22,6 +22,8 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./styles/base.module.css";
 import { useSelector } from "react-redux";
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 const theme = createTheme({
   typography: {

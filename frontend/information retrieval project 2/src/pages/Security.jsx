@@ -39,9 +39,6 @@ export default function Security() {
       return;
     }
 
-    console.log("Current Password:", currentPassword);
-    console.log("New Password:", newPassword);
-
     setError("");
     setSuccess("Password changed successfully!");
   };
