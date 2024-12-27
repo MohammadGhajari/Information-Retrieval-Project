@@ -80,7 +80,7 @@ export default function AddKeyword() {
           </InputLabel>
           <Select
             required={true}
-            // size="small"
+            style={{ boxShadow: "var(--shadow-me-sm" }}
             labelId="demo-multiple-checkbox-label"
             id="demo-multiple-checkbox"
             multiple
@@ -103,7 +103,7 @@ export default function AddKeyword() {
           variant="outlined"
           required
           fullWidth
-          // size="small"
+          style={{ boxShadow: "var(--shadow-me-sm" }}
         />
         <div className={styles["file-upload-container"]}>
           <label>Upload file (optional):</label>

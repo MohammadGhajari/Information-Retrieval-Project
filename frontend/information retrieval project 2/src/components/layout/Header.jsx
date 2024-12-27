@@ -12,14 +12,23 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdOutlineModeEdit } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const { email } = useSelector((state) => state.user);
 
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <h1 style={{ marginLeft: "1rem" }}>💀SAMADI💀</h1>
+        <NavLink
+          to={"/"}
+          style={{ marginLeft: "1rem", fontSize: "3rem", fontWeight: "bold" }}
+        >
+          💀SAMADI💀
+        </NavLink>
         <button className={styles["darkmode-btn"]}>
           {isDarkMode ? <IoSunnyOutline /> : <FaRegMoon />}
         </button>
@@ -46,7 +55,7 @@ export default function Header() {
         </div>
       </div>
       <div className={styles.right}>
-        {validator.isEmail("slkajsf@lakj.sdf") ? (
+        {validator.isEmail(email) ? (
           <>
             <div className={styles["profile-container"]}>
               <button
@@ -76,6 +85,18 @@ export default function Header() {
                     <IoAddCircleOutline />
                   </span>
                 </NavLink>
+                <NavLink className={styles["nav-btn"]} to="/edit-website">
+                  <span>Edit Website</span>
+                  <span>
+                    <MdOutlineModeEdit />
+                  </span>
+                </NavLink>
+                <NavLink className={styles["nav-btn"]} to="/delete-website">
+                  <span>Delete Website</span>
+                  <span>
+                    <RiDeleteBin6Line />
+                  </span>
+                </NavLink>
                 <button className={styles["nav-btn"]}>
                   <span>Logout</span>
                   <span>
@@ -90,7 +111,7 @@ export default function Header() {
             to="/login"
             className={`${styles["login-btn"]} ${styles["nav-btn"]}`}
           >
-            <span>Login|Signup</span>
+            <span style={{ fontSize: "1.8rem" }}>Login</span>
             <span>
               <IoMdLogIn />
             </span>

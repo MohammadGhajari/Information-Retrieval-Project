@@ -39,7 +39,6 @@ export default function Security() {
       return;
     }
 
-    // Handle password change logic here (e.g., API call)
     console.log("Current Password:", currentPassword);
     console.log("New Password:", newPassword);
 
@@ -69,6 +68,7 @@ export default function Security() {
         margin="normal"
         value={currentPassword}
         onChange={(e) => setCurrentPassword(e.target.value)}
+        style={{ boxShadow: "var(--shadow-me-sm" }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -91,6 +91,7 @@ export default function Security() {
         margin="normal"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
+        style={{ boxShadow: "var(--shadow-me-sm" }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

@@ -6,13 +6,14 @@ export default function AddWebsite() {
   return (
     <div className={styles["container"]}>
       <h1>Add Website</h1>
-      <p>Add your website name and domain to analyze</p>
       <Box component="form" className={styles["form"]}>
         <TextField
           label="Website Name"
           variant="outlined"
           required
           fullWidth
+          style={{ boxShadow: "var(--shadow-me-sm" }}
+
           // size="small"
         />
         <TextField
@@ -21,6 +22,7 @@ export default function AddWebsite() {
           variant="outlined"
           required
           fullWidth
+          style={{ boxShadow: "var(--shadow-me-sm" }}
         />
         <Button type="submit" variant="contained" color="primary">
           <span>

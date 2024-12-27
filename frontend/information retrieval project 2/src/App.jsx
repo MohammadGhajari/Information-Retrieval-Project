@@ -12,6 +12,8 @@ import Security from "./pages/Security";
 import Login from "./pages/Login";
 import Signup from "./pages/SignUp";
 import AddWebsite from "./pages/AddWebsite";
+import DeleteWebsite from "./pages/DeleteWebsite";
+import EditWebsite from "./pages/EditWebsite";
 import PageNotFound from "./pages/PageNotFound";
 import AddKeyword from "./pages/AddKeyword";
 import "@fontsource/roboto/300.css";
@@ -19,10 +21,12 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./styles/base.module.css";
+import { useSelector } from "react-redux";
 
 const theme = createTheme({
   typography: {
     fontSize: 20,
+    fontFamily: "Rajdhani",
   },
   palette: {
     primary: {
@@ -43,6 +47,8 @@ const theme = createTheme({
 });
 
 export default function App() {
+  const { email } = useSelector((state) => state.user);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -51,18 +57,26 @@ export default function App() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route index element={<Home />} />
-            <Route path={"/websites/:websiteID"} element={<WebsiteDetail />} />
-            <Route path={"/add-website"} element={<AddWebsite />} />
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<PersonalInformation />} />
-              <Route
-                path="personal-information"
-                element={<PersonalInformation />}
-              />
-              <Route path="security" element={<Security />} />
-              <Route path="add-keyword" element={<AddKeyword />} />
-              <Route path="analyze" element={<Analyzer />} />
-            </Route>
+            {/* <Route path={"/websites/:websiteID"} element={<WebsiteDetail />} /> */}
+            {email && <Route path={"/add-website"} element={<AddWebsite />} />}
+            {email && (
+              <Route path={"/delete-website"} element={<DeleteWebsite />} />
+            )}
+            {email && (
+              <Route path={"/edit-website"} element={<EditWebsite />} />
+            )}
+            {email && (
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route index element={<PersonalInformation />} />
+                <Route
+                  path="personal-information"
+                  element={<PersonalInformation />}
+                />
+                <Route path="security" element={<Security />} />
+                <Route path="add-keyword" element={<AddKeyword />} />
+                <Route path="analyze" element={<Analyzer />} />
+              </Route>
+            )}
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />

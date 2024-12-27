@@ -64,18 +64,26 @@ export default function PersonalInformation() {
         Personal Information
       </Typography>
 
-      <label htmlFor="profile-photo-input">
-        <CircleAvatar src={profilePhoto} alt="Profile Photo">
-          {!profilePhoto && <PhotoCamera />}
-        </CircleAvatar>
-      </label>
-      <input
-        id="profile-photo-input"
-        type="file"
-        accept="image/*"
-        style={{ display: "none" }}
-        onChange={handleProfilePhotoChange}
-      />
+      <div
+        style={{
+          width: "max-content",
+        }}
+      >
+        <label htmlFor="profile-photo-input">
+          <CircleAvatar src={profilePhoto} alt="Profile Photo">
+            {!profilePhoto && <PhotoCamera />}
+          </CircleAvatar>
+        </label>
+        <input
+          id="profile-photo-input"
+          type="file"
+          accept="image/*"
+          onChange={handleProfilePhotoChange}
+          style={{
+            display: "none",
+          }}
+        />
+      </div>
 
       <Box
         sx={{
@@ -92,6 +100,7 @@ export default function PersonalInformation() {
           disabled={!isEditingName}
           onChange={(e) => setUserName(e.target.value)}
           fullWidth
+          style={{ boxShadow: "var(--shadow-me-sm" }}
         />
         <Button
           variant="text"
@@ -118,6 +127,7 @@ export default function PersonalInformation() {
           disabled={!isEditingEmail}
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
+          style={{ boxShadow: "var(--shadow-me-sm" }}
         />
         <Button
           variant="text"
