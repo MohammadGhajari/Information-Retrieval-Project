@@ -9,7 +9,8 @@ import {
   CardContent,
   CardActions,
 } from "@mui/material";
-
+import { useMediaQuery } from "@mui/material";
+import styles from "././../styles/delete-website.module.css";
 const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
   <Modal open={open} onClose={onClose}>
     <Box
@@ -23,6 +24,7 @@ const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
         boxShadow: 24,
         p: 4,
         borderRadius: 2,
+        width: `${useMediaQuery("(max-width:450px)") ? "330px" : "400px"}`,
       }}
     >
       <Typography variant="h6" component="h2" gutterBottom>
@@ -90,6 +92,7 @@ const DeleteWebsite = () => {
 
   return (
     <Box
+      className={styles["container"]}
       sx={{
         marginTop: "4rem",
         width: "35%",
@@ -114,11 +117,13 @@ const DeleteWebsite = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ boxShadow: "var(--shadow-me-sm" }}
+          size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
         />
         <Button
           variant="contained"
           onClick={handleSearch}
           sx={{ height: "100%", width: "100%" }}
+          size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
         >
           Search
         </Button>

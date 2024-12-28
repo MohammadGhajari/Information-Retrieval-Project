@@ -9,6 +9,8 @@ import {
   CardContent,
   CardActions,
 } from "@mui/material";
+import styles from "./../styles/edit-website.module.css";
+import { useMediaQuery } from "@mui/material";
 
 const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
   <Modal open={open} onClose={onClose}>
@@ -18,7 +20,7 @@ const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: 400,
+        width: `${useMediaQuery("(max-width:450px)") ? "330px" : "400px"}`,
         bgcolor: "background.paper",
         boxShadow: 24,
         p: 4,
@@ -54,12 +56,14 @@ const EditFields = ({ website, onSave }) => {
         variant="outlined"
         value={editedName}
         onChange={(e) => setEditedName(e.target.value)}
+        size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
       />
       <TextField
         label="Website Domain"
         variant="outlined"
         value={editedDomain}
         onChange={(e) => setEditedDomain(e.target.value)}
+        size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
       />
       <Button
         variant="contained"
@@ -126,7 +130,10 @@ const EditWebsite = () => {
   };
 
   return (
-    <Box sx={{ marginTop: "4rem", width: "35%" }}>
+    <Box
+      sx={{ marginTop: "4rem", width: "35%" }}
+      className={styles["container"]}
+    >
       <Typography
         variant="h1"
         component="h1"
@@ -145,11 +152,13 @@ const EditWebsite = () => {
           fullWidth
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
         />
         <Button
           variant="contained"
           onClick={handleSearch}
           sx={{ height: "100%", width: "100%" }}
+          size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
         >
           Search
         </Button>

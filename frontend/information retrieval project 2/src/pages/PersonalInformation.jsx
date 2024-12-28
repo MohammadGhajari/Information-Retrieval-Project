@@ -8,22 +8,9 @@ import {
   IconButton,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { useMediaQuery } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-
-const StyledBox = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "100%",
-  maxWidth: "400px",
-  margin: "0 auto",
-  padding: "20px",
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  borderRadius: "8px",
-  backgroundColor: "#fff",
-});
-
+import styles from "./../styles/personal-information.module.css";
 const CircleAvatar = styled(Avatar)({
   width: "150px",
   height: "150px",
@@ -51,7 +38,7 @@ export default function PersonalInformation() {
   };
 
   return (
-    <div>
+    <div className={styles["container"]}>
       <Typography
         variant="h1"
         component="h1"
@@ -64,11 +51,7 @@ export default function PersonalInformation() {
         Personal Information
       </Typography>
 
-      <div
-        style={{
-          width: "max-content",
-        }}
-      >
+      <div className={styles["profile-container"]}>
         <label htmlFor="profile-photo-input">
           <CircleAvatar src={profilePhoto} alt="Profile Photo">
             {!profilePhoto && <PhotoCamera />}
@@ -101,6 +84,7 @@ export default function PersonalInformation() {
           onChange={(e) => setUserName(e.target.value)}
           fullWidth
           style={{ boxShadow: "var(--shadow-me-sm" }}
+          size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
         />
         <Button
           variant="text"
@@ -128,6 +112,7 @@ export default function PersonalInformation() {
           onChange={(e) => setEmail(e.target.value)}
           fullWidth
           style={{ boxShadow: "var(--shadow-me-sm" }}
+          size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
         />
         <Button
           variant="text"

@@ -47,7 +47,12 @@
     var(--color-primary),
     var(--color-secondary)
   );
-  --gradient-vertical-footer: linear-gradient(to bottom, #68c368, #b9e3b9);
+  --gradient-vertical-footer: linear-gradient(
+    to bottom,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  /* --gradient-vertical-footer: linear-gradient(to bottom, #68c368, #b9e3b9); */
 }
 
 *,

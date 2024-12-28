@@ -40,3 +40,44 @@
 .content {
   width: 80%;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+  }
+  .sidebar-container {
+    flex-direction: row;
+    width: 80%;
+    gap: 0.6rem;
+    padding: 0.6rem;
+    & .nav-btn {
+      width: 25%;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .sidebar-container {
+    width: 95%;
+  }
+}
+@media (max-width: 900px) {
+  .sidebar-container .nav-btn {
+    justify-content: center;
+  }
+  .sidebar-container .nav-btn svg {
+    font-size: 2rem;
+  }
+  .sidebar-container .nav-btn span:last-child {
+    display: none;
+  }
+}
+@media (max-width: 500px) {
+  .sidebar-container {
+    padding: 0;
+  }
+  .content {
+    width: 100%;
+  }
+}

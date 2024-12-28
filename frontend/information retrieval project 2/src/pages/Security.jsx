@@ -8,6 +8,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
 
 const StyledBox = styled(Box)({
@@ -66,6 +67,7 @@ export default function Security() {
         value={currentPassword}
         onChange={(e) => setCurrentPassword(e.target.value)}
         style={{ boxShadow: "var(--shadow-me-sm" }}
+        size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -89,6 +91,7 @@ export default function Security() {
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
         style={{ boxShadow: "var(--shadow-me-sm" }}
+        size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -116,6 +119,7 @@ export default function Security() {
       )}
 
       <Button
+        size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
         variant="contained"
         color="primary"
         fullWidth

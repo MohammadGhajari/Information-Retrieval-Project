@@ -35,7 +35,7 @@ export default function Pricing() {
             </p>
           </div>
           <div className={styles["svg-container"]}>
-            <img src="./../../../public/assets/writer.webp" alt="writer fees" />
+            <img src="./assets/writer.webp" alt="writer fees" />
           </div>
         </div>
 
@@ -64,16 +64,13 @@ export default function Pricing() {
             </p>
           </div>
           <div className={styles["svg-container"]}>
-            <img src="./../../../public/assets/order.webp" alt="order fees" />
+            <img src="./assets/order.webp" alt="order fees" />
           </div>
         </div>
 
         <div className={styles["feature-container"]}>
           <div className={`${styles["svg-container"]} ${styles["last-svg"]}`}>
-            <img
-              src="./../../../public/assets/quality.webp"
-              alt="quality fees"
-            />
+            <img src="./assets/quality.webp" alt="quality fees" />
           </div>
           <div className={styles["description-container"]}>
             <h1>Quality Control</h1>

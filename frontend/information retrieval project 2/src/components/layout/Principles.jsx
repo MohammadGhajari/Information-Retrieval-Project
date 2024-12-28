@@ -19,19 +19,13 @@ export default function Principles() {
             </p>
           </div>
           <div className={styles["svg-container"]}>
-            <img
-              src="./../../../public/assets/scalibility.webp"
-              alt="scalibility"
-            />
+            <img src="./assets/scalibility.webp" alt="scalibility" />
           </div>
         </div>
 
         <div className={styles["feature-container"]}>
           <div className={styles["svg-container"]}>
-            <img
-              src="./../../../public/assets/Sustainability.webp"
-              alt="Sustainability"
-            />
+            <img src="./assets/Sustainability.webp" alt="Sustainability" />
           </div>
           <div className={styles["description-container"]}>
             <h1>Sustainability</h1>
@@ -58,7 +52,7 @@ export default function Principles() {
             </p>
           </div>
           <div className={styles["svg-container"]}>
-            <img src="./../../../public/assets/quality2.webp" alt="Quality" />
+            <img src="./assets/quality2.webp" alt="Quality" />
           </div>
         </div>
       </div>

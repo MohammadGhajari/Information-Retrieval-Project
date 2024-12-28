@@ -72,7 +72,7 @@ export default function LoginForm({
               label="Password Confirm"
               variant="outlined"
               type={showPasswordConfirm ? "text" : "password"}
-              fullWidth
+              // fullWidth
               size="small"
               style={{ width: "60%" }}
               onChange={(e) => setPasswordConfirm(e.target.value)}

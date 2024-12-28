@@ -8,6 +8,7 @@ import {
   Tooltip,
   Legend,
   AreaChart,
+  ResponsiveContainer,
   Area,
 } from "recharts";
 import { useState } from "react";
@@ -21,6 +22,8 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Slider from "@mui/material/Slider";
 import { MenuProps, shuffleArray, refactorData } from "../../services/helper";
+import { useMediaQuery } from "@mui/material";
+
 let COLORS = [
   "#D51054",
   "#CA9FAD",
@@ -115,7 +118,12 @@ export default function CustomLineChart({ data }) {
   return (
     <div className={styles["container"]}>
       <h2>Keyword rank changes</h2>
-      <div>
+      <div
+        style={{
+          width: "93%",
+          marginLeft: "1rem",
+        }}
+      >
         <h3>Time range filter</h3>
         <Slider
           min={minSlider}
@@ -178,33 +186,28 @@ export default function CustomLineChart({ data }) {
           />
         ))}
       </AreaChart> */}
-      <LineChart
-        width={950}
-        height={300}
-        data={dataForChart}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {dataKeys.map((key, i) => (
-          <Line
-            key={key}
-            type="monotone"
-            dataKey={key}
-            stroke={COLORS[i % COLORS.length]}
-            // fill={getRandomColor()}
-            strokeWidth={2}
-          />
-        ))}
-      </LineChart>
+      <ResponsiveContainer height={300} width={"100%"}>
+        <LineChart
+          // width={950}
+          // height={300}
+          data={dataForChart}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="time" />
+          {!useMediaQuery("(max-width:500px)") && <YAxis />}
+          <Tooltip />
+          <Legend />
+          {dataKeys.map((key, i) => (
+            <Line
+              key={key}
+              type="monotone"
+              dataKey={key}
+              stroke={COLORS[i % COLORS.length]}
+              strokeWidth={2}
+            />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }

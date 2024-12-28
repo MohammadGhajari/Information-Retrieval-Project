@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import { useState } from "react";
@@ -19,6 +18,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import { MenuProps } from "../../services/helper";
+import { useMediaQuery } from "@mui/material";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
@@ -77,23 +77,15 @@ export default function CustomBarChart({ data }) {
           ))}
         </Select>
       </FormControl>
-      <BarChart
-        width={950}
-        height={300}
-        data={shownData}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey="value" barSize={2000000} fill={"#8884d8"} />
-      </BarChart>
+      <ResponsiveContainer width={"100%"} height={300}>
+        <BarChart data={shownData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          {!useMediaQuery("(max-width:450px)") && <YAxis />}
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="value" barSize={50} fill={"#8884d8"} />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }

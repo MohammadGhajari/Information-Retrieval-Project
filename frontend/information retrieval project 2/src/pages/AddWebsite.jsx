@@ -1,6 +1,7 @@
 import styles from "./../styles/add-website.module.css";
 import { TextField, Button, Box } from "@mui/material";
 import { IoAddCircleOutline } from "react-icons/io5";
+import { useMediaQuery } from "@mui/material";
 
 export default function AddWebsite() {
   return (
@@ -13,11 +14,10 @@ export default function AddWebsite() {
           required
           fullWidth
           style={{ boxShadow: "var(--shadow-me-sm" }}
-
-          // size="small"
+          size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
         />
         <TextField
-          // size="small"
+          size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
           label="Website Domain"
           variant="outlined"
           required

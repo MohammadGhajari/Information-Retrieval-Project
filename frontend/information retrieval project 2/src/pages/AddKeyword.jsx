@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FormControl from "@mui/material/FormControl";
 import { MenuProps } from "../services/helper";
+import { useMediaQuery } from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 
@@ -70,6 +71,7 @@ export default function AddKeyword() {
             Website
           </InputLabel>
           <Select
+            size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
             required={true}
             style={{ boxShadow: "var(--shadow-me-sm" }}
             labelId="demo-multiple-checkbox-label"
@@ -95,6 +97,7 @@ export default function AddKeyword() {
           required
           fullWidth
           style={{ boxShadow: "var(--shadow-me-sm" }}
+          size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
         />
         <div className={styles["file-upload-container"]}>
           <label>Upload file (optional):</label>
@@ -121,7 +124,11 @@ export default function AddKeyword() {
             )}
           </div>
         </div>
-        <Button variant="contained" color="primary" size="large">
+        <Button
+          variant="contained"
+          color="primary"
+          size={useMediaQuery("(max-width:500px)") ? "medium" : "large"}
+        >
           Add Keyword
         </Button>
       </form>

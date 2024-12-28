@@ -1,0 +1,12 @@
+.profile-container {
+  width: "max-content";
+}
+@media (max-width: 500px) {
+  .container {
+    width: 100%;
+  }
+  .profile-container {
+    display: flex;
+    justify-content: center;
+  }
+}

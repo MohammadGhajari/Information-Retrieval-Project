@@ -23,3 +23,25 @@
     }
   }
 }
+
+@media (max-width: 900px) {
+  .container {
+    width: 50%;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    width: 80%;
+  }
+}
+@media (max-width: 400px) {
+  .container {
+    width: 95%;
+    .form {
+      gap: 1rem;
+    }
+    & h1 {
+      font-size: 2rem;
+    }
+  }
+}
