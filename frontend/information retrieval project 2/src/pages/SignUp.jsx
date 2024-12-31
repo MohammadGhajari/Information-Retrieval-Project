@@ -22,19 +22,16 @@ export default function Signup() {
 
     if (!isEmail(email)) {
       setEmailError(true);
-      toastError("Invalid email address.");
-      return;
+      return toastError("Invalid email address.");
     }
     if (password.length < 8) {
       setPasswordError(true);
-      toastError("Password length must be at least 8 characters.");
-      return;
+      return toastError("Password length must be at least 8 characters.");
     }
     if (password !== passwordConfirm) {
       setPasswordError(true);
       setPasswordConfirmError(true);
-      toastError("Password and password confirm must be the same.");
-      return;
+      return toastError("Password and password confirm must be the same.");
     }
 
     //then sign up

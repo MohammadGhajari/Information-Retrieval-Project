@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import styles from "./../styles/edit-website.module.css";
 import { useMediaQuery } from "@mui/material";
+import { toastError, toastSuccess } from "./../services/notify";
+import { isValidDomain } from "../services/helper";
 
 const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
   <Modal open={open} onClose={onClose}>
@@ -105,28 +107,37 @@ const EditWebsite = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [updatedWebsite, setUpdatedWebsite] = useState(null);
 
-  const handleSearch = () => {
+  // fetch website
+  function handleSearch() {
+    setWebsite(null);
+
+    if (!searchQuery) return toastError("provide a search query");
+
+    //check if website with this domain exists
     if (searchQuery === "example.com") {
       setWebsite({ name: "Example Website", domain: "example.com" });
+      setSearchQuery("");
     } else {
       setWebsite(null);
     }
-  };
+  }
 
   const handleEditSave = (name, domain) => {
+    if (!name || !domain) return;
+
+    if (!isValidDomain(domain)) return toastError("Enter a valid domain");
+
     setUpdatedWebsite({ name, domain });
     setModalOpen(true);
   };
 
   const handleSave = () => {
-    // Simulate save operation
-    console.log(
-      `Updated website: ${updatedWebsite.name}, ${updatedWebsite.domain}`
-    );
-    setWebsite(updatedWebsite);
+    setWebsite(null);
     setUpdatedWebsite(null);
     setModalOpen(false);
     setIsEditing(false);
+
+    toastSuccess("Website updated successfully");
   };
 
   return (
@@ -145,7 +156,13 @@ const EditWebsite = () => {
       >
         Edit Website
       </Typography>
-      <Box display="flex" flexDirection={"column"} gap={2} alignItems="center">
+      <Box
+        component={"form"}
+        display="flex"
+        flexDirection={"column"}
+        gap={2}
+        alignItems="center"
+      >
         <TextField
           label="Enter website domain"
           variant="outlined"
@@ -153,6 +170,7 @@ const EditWebsite = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
+          required={true}
         />
         <Button
           variant="contained"

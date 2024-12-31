@@ -1,3 +1,5 @@
+import validator from "validator";
+
 export const MenuProps = {
   PaperProps: {
     style: {
@@ -25,4 +27,12 @@ export function refactorData(data) {
     refactoredData.push(sample);
   });
   return refactoredData;
+}
+
+export function isValidDomain(input) {
+  return validator.isFQDN(input, {
+    require_tld: true,
+    allow_underscores: false,
+    allow_trailing_dot: false,
+  });
 }

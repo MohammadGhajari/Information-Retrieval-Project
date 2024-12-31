@@ -19,7 +19,6 @@ const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        width: 400,
         bgcolor: "background.paper",
         boxShadow: 24,
         p: 4,
@@ -72,12 +71,14 @@ const SearchResult = ({ website, onDelete }) => (
   </Card>
 );
 
-const DeleteWebsite = () => {
+export default function DeleteWebsite() {
   const [searchQuery, setSearchQuery] = useState("");
   const [website, setWebsite] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleSearch = () => {
+    if (!searchQuery) return;
+
     if (searchQuery === "example.com") {
       setWebsite({ name: "Example Website", domain: "example.com" });
     } else {
@@ -86,6 +87,7 @@ const DeleteWebsite = () => {
   };
 
   const handleDelete = () => {
+    setSearchQuery("");
     setWebsite(null);
     setModalOpen(false);
   };
@@ -139,6 +141,4 @@ const DeleteWebsite = () => {
       />
     </Box>
   );
-};
-
-export default DeleteWebsite;
+}

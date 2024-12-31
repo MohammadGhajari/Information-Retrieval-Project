@@ -1,3 +1,4 @@
+import FAQ from "../components/layout/FAQ";
 import Hero from "../components/layout/Hero";
 import Pricing from "../components/layout/Pricing";
 import Principles from "../components/layout/Principles";
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <Pricing />
       <Principles />
+      <FAQ />
     </div>
   );
 }

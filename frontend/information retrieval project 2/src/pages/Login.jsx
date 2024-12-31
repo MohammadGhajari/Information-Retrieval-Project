@@ -19,8 +19,7 @@ export default function Login() {
 
     if (!isEmail(email)) {
       setEmailError(true);
-      toastError("Invalid email address.");
-      return;
+      return toastError("Invalid email address.");
     }
 
     //then login

@@ -9,39 +9,26 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
-import { styled } from "@mui/system";
-
-const StyledBox = styled(Box)({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "100%",
-  maxWidth: "400px",
-  margin: "0 auto",
-  padding: "20px",
-  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  borderRadius: "8px",
-  backgroundColor: "#fff",
-});
+import { toastError, toastSuccess } from "./../services/notify";
 
 export default function Security() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = () => {
-    if (newPassword.length <= 8) {
-      setError("Password must be greater than 8 characters.");
-      setSuccess("");
-      return;
-    }
+    if (!currentPassword || !newPassword || !confirmPassword) return;
 
-    setError("");
-    setSuccess("Password changed successfully!");
+    if (newPassword.length < 8)
+      return toastError("Password must be at least 8 characters");
+
+    if (newPassword !== confirmPassword)
+      return toastError("New password and confirm password must be the same");
+
+    //then change the password
   };
 
   return (
@@ -106,17 +93,29 @@ export default function Security() {
         }}
       />
 
-      {error && (
-        <Typography color="error" variant="body2" gutterBottom>
-          {error}
-        </Typography>
-      )}
-
-      {success && (
-        <Typography color="success" variant="body2" gutterBottom>
-          {success}
-        </Typography>
-      )}
+      <TextField
+        label="Current Password"
+        variant="outlined"
+        type={showConfirmPassword ? "text" : "password"}
+        fullWidth
+        margin="normal"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        style={{ boxShadow: "var(--shadow-me-sm" }}
+        size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                edge="end"
+              >
+                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
 
       <Button
         size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}

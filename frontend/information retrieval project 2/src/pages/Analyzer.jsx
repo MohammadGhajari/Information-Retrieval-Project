@@ -2,6 +2,8 @@ import CustomBarChart from "../components/charts/CustomBarChart";
 import CustomTable from "../components/charts/CustomTable";
 import CustomLineChart from "../components/charts/CustomLineChart";
 import styles from "./../styles/analyzer.module.css";
+import Loader from "./../components/loaders/Loader";
+import { useEffect, useState } from "react";
 
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -12,7 +14,8 @@ function getRandomColor() {
   return color;
 }
 export default function Analyzer() {
-  const dataForBarChart = [
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataForBarChart, setDataForBarChart] = useState([
     {
       name: "Item a",
       value: 2400,
@@ -41,8 +44,8 @@ export default function Analyzer() {
       name: "item g",
       value: 4300,
     },
-  ];
-  const dataForTable = [
+  ]);
+  const [dataForTable, setDataForTable] = useState([
     {
       keyWord: "Tesla",
       website: "test.com",
@@ -123,9 +126,8 @@ export default function Analyzer() {
       avgRank: 4,
       checkCount: 10,
     },
-  ];
-
-  const dataForLineChart = [
+  ]);
+  const [dataForLineChart, setDataForLineChart] = useState([
     {
       time: "day 1",
       data: [
@@ -189,14 +191,31 @@ export default function Analyzer() {
         { website: "website3", keyword: "keyword1", value: 50 },
       ],
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    function fetchData() {
+      setIsLoading(true);
+      //fetch charts data
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className={styles["container"]}>
       <h1>Website Analyzer</h1>
-      <CustomBarChart data={dataForBarChart} />
-      <CustomTable data={dataForTable} />
-      <CustomLineChart data={dataForLineChart} />
+      {!isLoading ? (
+        <div>
+          <CustomBarChart data={dataForBarChart} />
+          <CustomTable data={dataForTable} />
+          <CustomLineChart data={dataForLineChart} />
+        </div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

@@ -53,7 +53,7 @@ export default function Footer() {
             <span></span>
           </div>
           <div className={styles["get-started-container"]}>
-            <p>Lets get started to discover new hotels.</p>
+            <p>Lets get started </p>
             <NavLink className={styles["subscrib-nav"]} to={"/login"}>
               Subscrib Now
             </NavLink>
