@@ -33,6 +33,25 @@ def get_google_search_links(query, num_pages=10):
     
     return links
 
+def get_link_rank(query, domain, num_pages=10):
+    base_url = "https://www.google.com/search?q=" + query
+    domain_rank = 0
+
+    for page in range(num_pages):
+        driver.get(base_url + "&start=" + str(page * 10))
+        time.sleep(2)
+
+        search_results = driver.find_elements(By.XPATH, "//div[@class='tF2Cxc']//a[@href]")
+        
+        for rank, result in enumerate(search_results, start=page * 10 + 1):
+            href = result.get_attribute("href")
+            
+            if domain in href:
+                domain_rank = rank
+                break
+
+    return rank
+
 query = "Python programming"
 links = get_google_search_links(query, num_pages=1)
 
