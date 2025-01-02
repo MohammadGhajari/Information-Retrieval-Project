@@ -41,6 +41,7 @@ export default function Security() {
         fontFamily={"Rajdhani"}
         fontWeight={"bold"}
         marginBottom={7}
+        color="var(--color-grey-3)"
       >
         Reset Password
       </Typography>
