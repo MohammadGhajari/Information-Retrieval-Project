@@ -47,6 +47,7 @@ export default function PersonalInformation() {
         fontFamily={"Rajdhani"}
         fontWeight={"bold"}
         marginBottom={7}
+        color="var(--color-grey-3)"
       >
         Personal Information
       </Typography>

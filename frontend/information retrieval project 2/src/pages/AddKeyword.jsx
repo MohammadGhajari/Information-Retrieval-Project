@@ -95,7 +95,7 @@ export default function AddKeyword() {
 
   return (
     <div className={styles["container"]}>
-      <h1>Add keyword for website</h1>
+      <h1 style={{ color: "var(--color-grey-3)" }}>Add keyword for website</h1>
       {!isLoading ? (
         <form>
           <FormControl>
