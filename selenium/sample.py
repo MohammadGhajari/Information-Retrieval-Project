@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
 
-service = webdriver.ChromeService(executable_path = './chromedriver')
+service = webdriver.ChromeService(executable_path = 'chromedriver.exe')
 driver = webdriver.Chrome(service=service)
 
 def get_google_search_links(query, num_pages=10):
