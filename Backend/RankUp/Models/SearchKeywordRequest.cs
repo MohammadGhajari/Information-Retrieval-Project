@@ -4,19 +4,17 @@ namespace RankUp.Models
 {
     public class SearchKeywordRequest
     {
-        public string email { get; set; }
-        public List<SiteDto> Sites { get; set; } = new List<SiteDto>();
-        public List<KeywordDto> Keywords { get; set; } = new List<KeywordDto> { };
-    }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
-    public class SiteDto
-    {
-        public string Domain { get; set; } = string.Empty;
-        public string Name { get; set; } = string.Empty;
-    }
+        [Required]
+        public string SiteName { get; set; }
 
-    public class KeywordDto
-    {
-        public string Name { get; set; } = string.Empty;
+        [Required]
+        public string SiteDomain { get; set; }
+
+        [Required]
+        public string Keyword { get; set; } 
     }
 }

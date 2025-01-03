@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
+  "dgSpecHash": "bkYw6lQCJB8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj",
+=======
   "dgSpecHash": "D9UibOAIGe0=",
   "success": true,
   "projectFilePath": "C:\\Users\\TAMIRLAND\\Desktop\\IR-project 2\\Backend\\RankUp\\RankUp.csproj",
+>>>>>>> 85fdbd86fa01345fb2db2e7a76b2777fe3d12f72
   "expectedPackageFiles": [
     "C:\\Users\\TAMIRLAND\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\TAMIRLAND\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

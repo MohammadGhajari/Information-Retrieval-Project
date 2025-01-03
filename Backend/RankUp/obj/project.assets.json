@@ -5424,11 +5424,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
+      "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj",
+      "projectName": "RankUp",
+      "projectPath": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj",
+      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\obj\\",
+=======
       "projectUniqueName": "C:\\Users\\TAMIRLAND\\Desktop\\IR-project 2\\Backend\\RankUp\\RankUp.csproj",
       "projectName": "RankUp",
       "projectPath": "C:\\Users\\TAMIRLAND\\Desktop\\IR-project 2\\Backend\\RankUp\\RankUp.csproj",
       "packagesPath": "C:\\Users\\TAMIRLAND\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\TAMIRLAND\\Desktop\\IR-project 2\\Backend\\RankUp\\obj\\",
+>>>>>>> 85fdbd86fa01345fb2db2e7a76b2777fe3d12f72
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
