@@ -27,6 +27,9 @@ def get_link_rank(query, domain, num_pages=10):
             if href and jsname and jsname == "UWckNb":
                 rank += 1
                 if domain in href:
+                    driver.get(href)
+                    time.sleep(5)
+
                     domain_rank = rank
                     break
         
