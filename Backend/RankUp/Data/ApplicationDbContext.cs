@@ -1,6 +1,6 @@
-﻿using RankUp.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using RankUp.Models;
 
 namespace RankUp.Data
 {
@@ -12,5 +12,7 @@ namespace RankUp.Data
         public DbSet<Keyword> Keywords { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<RankResults> RankResults { get; set; }
     }
 }

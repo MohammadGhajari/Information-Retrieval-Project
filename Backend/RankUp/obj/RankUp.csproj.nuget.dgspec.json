@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Desktop\\Hw2-IR\\RankUp\\RankUp.csproj": {}
+    "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Desktop\\Hw2-IR\\RankUp\\RankUp.csproj": {
+    "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\Hw2-IR\\RankUp\\RankUp.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj",
         "projectName": "RankUp",
-        "projectPath": "C:\\Users\\Lenovo\\Desktop\\Hw2-IR\\RankUp\\RankUp.csproj",
+        "projectPath": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\RankUp.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Desktop\\Hw2-IR\\RankUp\\obj\\",
+        "outputPath": "C:\\Users\\Lenovo\\Desktop\\Information-Retrieval-Project\\Backend\\RankUp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
