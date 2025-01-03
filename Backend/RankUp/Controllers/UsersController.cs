@@ -23,9 +23,11 @@ namespace RankUp.Controllers
         [HttpGet("ShowAllUsers")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
+            Console.WriteLine("kir khar");
             var users = await _context.Users
                 .Select(u => new { u.Email, u.Name }) // جلوگیری از نمایش رمز عبور
                 .ToListAsync();
+
             return Ok(users);
         }
 
@@ -53,10 +55,12 @@ namespace RankUp.Controllers
         public async Task<ActionResult> CreateUser(User user)
         {
             // اعتبارسنجی فرمت ایمیل
+            Console.WriteLine("hello 1");
             if (!new EmailAddressAttribute().IsValid(user.Email))
             {
                 return BadRequest("The email format is invalid.");
             }
+            Console.WriteLine("hello 1");
 
             // بررسی اینکه ایمیل در دیتابیس تکراری نباشد
             if (_context.Users.Any(u => u.Email == user.Email))
@@ -64,11 +68,20 @@ namespace RankUp.Controllers
                 return Conflict("A user with this email already exists.");
             }
 
+            Console.WriteLine("hello 2");
+
             // هش کردن رمز عبور
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
 
+            Console.WriteLine("hello 3");
+
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+
+            Console.WriteLine("hello 4");
+
+
 
             return CreatedAtAction(nameof(GetUser), new { email = user.Email }, new { user.Email, user.Name });
         }

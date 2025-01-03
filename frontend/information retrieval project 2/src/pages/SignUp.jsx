@@ -3,9 +3,14 @@ import styles from "./../styles/signup.module.css";
 import { isEmail } from "validator";
 import { useState } from "react";
 import { toastError } from "../services/notify";
+import { signUp } from "../services/handleRequests";
+import { useDispatch } from "react-redux";
+import { setEmail, setName } from "./../state management/userSlice";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
@@ -13,14 +18,17 @@ export default function Signup() {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordConfirmError, setPasswordConfirmError] = useState(false);
 
-  function handleSubmit(e) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
     setEmailError(false);
     setPasswordError(false);
     setPasswordConfirmError(false);
 
-    if (!isEmail(email)) {
+    if (!isEmail(userEmail)) {
       setEmailError(true);
       return toastError("Invalid email address.");
     }
@@ -35,6 +43,22 @@ export default function Signup() {
     }
 
     //then sign up
+
+    const data = {
+      Email: userEmail,
+      Password: password,
+      Name: "",
+    };
+
+    const status = await toast.promise(signUp(data), {
+      pending: "Signing up...",
+      success: "Account created!👋",
+      error: "Try again.⚠️",
+    });
+
+    if (status === "success") {
+      navigate("/login");
+    }
   }
 
   return (
@@ -42,7 +66,7 @@ export default function Signup() {
       <LoginForm
         type={"signup"}
         onSubmit={handleSubmit}
-        setEmail={setEmail}
+        setEmail={setUserEmail}
         setPassword={setPassword}
         setPasswordConfirm={setPasswordConfirm}
         emailError={emailError}

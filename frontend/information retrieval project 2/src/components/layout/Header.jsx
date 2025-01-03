@@ -14,12 +14,26 @@ import { useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineModeEdit } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setIsDarkMode } from "./../../state management/darkModeSlice.js";
+import { setEmail, setName } from "../../state management/userSlice.js";
 
 export default function Header() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // const [isDarkMode, setIsDarkMode] = useState(false);
   const { email } = useSelector((state) => state.user);
+  const { isDarkMode } = useSelector((state) => state.darkMode);
+  const dispatch = useDispatch();
 
+  function handleDarkMode() {
+    dispatch(setIsDarkMode(!isDarkMode));
+  }
+
+  function handleLogout() {
+    dispatch(setName(""));
+    dispatch(setEmail(""));
+    localStorage.setItem("email", "");
+    localStorage.setItem("name", "");
+  }
   return (
     <div className={styles.container}>
       <div className={styles.left}>
@@ -30,11 +44,9 @@ export default function Header() {
             // src="https://static-00.iconduck.com/assets.00/penis-yellow-emoji-512x501-azqxh2dc.png"
             src="https://static-00.iconduck.com/assets.00/penis-black-emoji-512x501-2l9h76i7.png"
             alt="cock"
-            // height={40}
-            // width={50}
           />
         </NavLink>
-        <button className={styles["darkmode-btn"]}>
+        <button className={styles["darkmode-btn"]} onClick={handleDarkMode}>
           {isDarkMode ? <IoSunnyOutline /> : <FaRegMoon />}
         </button>
         <div className={styles["nav-container"]}>
@@ -70,6 +82,7 @@ export default function Header() {
 
               <div className={styles["menu-container"]}>
                 <button
+                  onClick={handleDarkMode}
                   className={`${styles["nav-btn"]} ${styles["dark-btn"]}`}
                 >
                   <span>Dark mode</span>
@@ -102,7 +115,7 @@ export default function Header() {
                     <RiDeleteBin6Line />
                   </span>
                 </NavLink>
-                <button className={styles["nav-btn"]}>
+                <button className={styles["nav-btn"]} onClick={handleLogout}>
                   <span>Logout</span>
                   <span>
                     <MdOutlineLogout />

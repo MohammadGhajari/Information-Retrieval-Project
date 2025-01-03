@@ -14,7 +14,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RankUp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5bc1d2b6ea5c998430e9e6e46627c9f12cfd3dd0")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6363d00e3ea50e909494d1d9da17a2e9fe826fe5")]
+>>>>>>> 85fdbd86fa01345fb2db2e7a76b2777fe3d12f72
 [assembly: System.Reflection.AssemblyProductAttribute("RankUp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RankUp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

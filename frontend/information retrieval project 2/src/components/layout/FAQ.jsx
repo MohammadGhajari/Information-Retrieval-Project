@@ -97,11 +97,13 @@ export default function FAQ() {
 
   return (
     <div
+      id="faq"
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "5rem",
         alignItems: "center",
+        color: "var(--color-grey-3)",
       }}
     >
       <h1 style={{ fontSize: "4rem" }}>FAQs</h1>
@@ -109,6 +111,7 @@ export default function FAQ() {
       <div style={{ boxShadow: "var(--shadow-sm)" }}>
         {QAPairs.map((qa, i) => (
           <Accordion
+            key={i}
             expanded={expanded === `panel${i + 1}`}
             onChange={handleChange(`panel${i + 1}`)}
           >
@@ -116,10 +119,14 @@ export default function FAQ() {
               aria-controls="panel1d-content"
               id="panel1d-header"
             >
-              <Typography component="span">{qa.q}</Typography>
+              <Typography color="var(--color-grey-3)" component="span">
+                {qa.q}
+              </Typography>
             </AccordionSummary>
-            <AccordionDetails>
-              <Typography>{qa.a}</Typography>
+            <AccordionDetails
+              style={{ backgroundColor: "var(--color-white-1)" }}
+            >
+              <Typography color="var(--color-grey-3)">{qa.a}</Typography>
             </AccordionDetails>
           </Accordion>
         ))}
