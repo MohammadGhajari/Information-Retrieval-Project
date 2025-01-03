@@ -14,6 +14,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
         policy.WithOrigins("http://127.0.0.10:8000") // Allow this specific origin
+        //policy.WithOrigins("https://samadi.netlify.app")
               .AllowAnyHeader()                     // Allow any headers
               .AllowAnyMethod()                     // Allow any HTTP methods
               .AllowCredentials();                  // Allow credentials (cookies, etc.)

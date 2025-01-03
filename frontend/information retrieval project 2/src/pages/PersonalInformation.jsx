@@ -11,6 +11,13 @@ import { styled } from "@mui/system";
 import { useMediaQuery } from "@mui/material";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import styles from "./../styles/personal-information.module.css";
+import { updateUser } from "../services/handleRequests";
+import { useSelector } from "react-redux";
+import { toastSuccess } from "../services/notify";
+import { useDispatch } from "react-redux";
+import { setName } from "../state management/userSlice";
+import { toast } from "react-toastify";
+
 const CircleAvatar = styled(Avatar)({
   width: "150px",
   height: "150px",
@@ -20,11 +27,16 @@ const CircleAvatar = styled(Avatar)({
 });
 
 export default function PersonalInformation() {
+  const { email, password, name, profile } = useSelector((state) => state.user);
+
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [userName, setUserName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
+  const [userName, setUserName] = useState(name);
+  const [userEmail, setUserEmail] = useState(email);
+
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingEmail, setIsEditingEmail] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleProfilePhotoChange = (event) => {
     const file = event.target.files[0];
@@ -36,6 +48,32 @@ export default function PersonalInformation() {
       reader.readAsDataURL(file);
     }
   };
+
+  async function handleSaveUserName() {
+    setIsEditingName(!isEditingName);
+
+    if (isEditingName) {
+      console.log(userName);
+      console.log(userEmail);
+
+      const data = {
+        Email: userEmail,
+        Name: userName,
+        Password: password,
+        Profile: profile,
+      };
+      const res = await toast.promise(updateUser(data), {
+        pending: "Updating User name",
+        success: `User name updated successfully`,
+        error: "Try again.⚠️",
+      });
+
+      if (res === "success") {
+        dispatch(setName(userName));
+        localStorage.setItem("name", userName);
+      }
+    }
+  }
 
   return (
     <div className={styles["container"]}>
@@ -90,7 +128,7 @@ export default function PersonalInformation() {
         <Button
           variant="text"
           color="primary"
-          onClick={() => setIsEditingName(!isEditingName)}
+          onClick={handleSaveUserName}
           sx={{ marginLeft: "8px" }}
         >
           {isEditingName ? "Save" : "Edit"}
@@ -108,9 +146,9 @@ export default function PersonalInformation() {
         <TextField
           label="Email"
           variant="outlined"
-          value={email}
+          value={userEmail}
           disabled={!isEditingEmail}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setUserEmail(e.target.value)}
           fullWidth
           style={{ boxShadow: "var(--shadow-me-sm" }}
           size={useMediaQuery("(max-width:500px)") ? "small" : "medium"}

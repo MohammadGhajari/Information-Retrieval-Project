@@ -36,3 +36,41 @@ export async function login(data) {
     }
   });
 }
+
+export async function updateUser(data) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      const res = await axios.put(
+        `${domain}Users/UpdateUserByEmail/${data.Email}`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(res);
+      if (res.status === 204) {
+        resolve("success");
+      }
+      reject("error");
+    } catch (err) {
+      console.log(err);
+    }
+  });
+}
+
+export async function createWebsite(data) {
+  return new Promise(async function (resolve, reject) {
+    try {
+      const res = await axios.post(`${domain}Users/Register`, data, {
+        withCredentials: true,
+      });
+
+      if (res.status === 201) {
+        resolve("success");
+      }
+    } catch (err) {
+      toastError("There is a user with this email");
+    }
+  });
+}

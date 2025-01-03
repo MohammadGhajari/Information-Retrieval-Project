@@ -5,3 +5,8 @@
   height: 500px;
   margin-top: 5rem;
 }
+
+.grid-container {
+  background-color: red;
+  height: 100%;
+}

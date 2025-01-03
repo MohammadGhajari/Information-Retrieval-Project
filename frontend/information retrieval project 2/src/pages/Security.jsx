@@ -10,6 +10,10 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { toastError, toastSuccess } from "./../services/notify";
+import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../services/handleRequests";
+import { setPassword } from "../state management/userSlice";
 
 export default function Security() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -19,7 +23,11 @@ export default function Security() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = () => {
+  const { email, name, profile } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  async function handleSubmit() {
     if (!currentPassword || !newPassword || !confirmPassword) return;
 
     if (newPassword.length < 8)
@@ -29,7 +37,32 @@ export default function Security() {
       return toastError("New password and confirm password must be the same");
 
     //then change the password
-  };
+
+    const data = {
+      Email: email,
+      Name: name,
+      Profile: profile,
+      Password: newPassword,
+    };
+
+    const res = await toast.promise(updateUser(data), {
+      pending: "Changing password...",
+      success: `Password changed successfully!!!`,
+      error: "Try again.⚠️",
+    });
+
+    if (res.status === "success") {
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setShowCurrentPassword(false);
+      setShowNewPassword(false);
+      setShowConfirmPassword(false);
+
+      dispatch(setPassword(newPassword));
+      localStorage.setItem("password", newPassword);
+    }
+  }
 
   return (
     <div>

@@ -25,7 +25,12 @@ import { useSelector } from "react-redux";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { useEffect } from "react";
 import { GlobalStyles } from "@mui/material";
-import { setEmail, setName } from "./state management/userSlice";
+import {
+  setEmail,
+  setName,
+  setProfile,
+  setPassword,
+} from "./state management/userSlice";
 import { useDispatch } from "react-redux";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -140,6 +145,8 @@ export default function App() {
     if (localStorage.getItem("email")) {
       dispatch(setEmail(localStorage.getItem("email")));
       dispatch(setName(localStorage.getItem("name")));
+      dispatch(setProfile(localStorage.getItem("profile")));
+      dispatch(setPassword(localStorage.getItem("password")));
     }
     // else {
     //   dispatch(setEmail(localStorage.getItem("")));

@@ -5,13 +5,18 @@ import { useState } from "react";
 import { toastError } from "../services/notify";
 import { login } from "../services/handleRequests";
 import { useDispatch } from "react-redux";
-import { setEmail, setName } from "./../state management/userSlice";
+import {
+  setEmail,
+  setName,
+  setProfile,
+  setPassword,
+} from "./../state management/userSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [userEmail, setUserEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userPassword, setUserPassword] = useState("");
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -34,7 +39,7 @@ export default function Login() {
 
     const data = {
       Email: userEmail,
-      Password: password,
+      Password: userPassword,
     };
 
     const user = await toast.promise(login(data), {
@@ -46,9 +51,13 @@ export default function Login() {
     if (user.email) {
       dispatch(setEmail(user.email));
       dispatch(setName(user.name));
+      dispatch(setProfile(user.profile));
+      dispatch(setPassword(userPassword));
 
       localStorage.setItem("email", user.email);
       localStorage.setItem("name", user.name);
+      localStorage.setItem("profile", user.profile);
+      localStorage.setItem("password", userPassword);
 
       navigate("/");
     }
@@ -60,7 +69,7 @@ export default function Login() {
         type={"login"}
         onSubmit={handleSubmit}
         setEmail={setUserEmail}
-        setPassword={setPassword}
+        setPassword={setUserPassword}
         emailError={emailError}
         passwordError={passwordError}
       />

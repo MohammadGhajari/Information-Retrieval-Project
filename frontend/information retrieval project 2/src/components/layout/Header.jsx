@@ -17,12 +17,15 @@ import { MdOutlineModeEdit } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsDarkMode } from "./../../state management/darkModeSlice.js";
 import { setEmail, setName } from "../../state management/userSlice.js";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   // const [isDarkMode, setIsDarkMode] = useState(false);
   const { email } = useSelector((state) => state.user);
   const { isDarkMode } = useSelector((state) => state.darkMode);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handleDarkMode() {
     dispatch(setIsDarkMode(!isDarkMode));
@@ -33,6 +36,7 @@ export default function Header() {
     dispatch(setEmail(""));
     localStorage.setItem("email", "");
     localStorage.setItem("name", "");
+    navigate("/");
   }
   return (
     <div className={styles.container}>
