@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "QNED2s0un/IgEcFbHmbnerKM8thLRSw860JGrg+mvrE=",
+  "Hash": "mW/+b/BDpRB/jlOxXDTLjGOJDD/qKg/ZWKzx4tRqoBI=",
   "Source": "RankUp",
   "BasePath": "_content/RankUp",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

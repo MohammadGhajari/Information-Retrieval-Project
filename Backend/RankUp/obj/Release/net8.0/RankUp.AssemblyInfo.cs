@@ -12,9 +12,9 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("RankUp")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6363d00e3ea50e909494d1d9da17a2e9fe826fe5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c2b37010a01eb26c99cc30188e41233295fb2d4")]
 [assembly: System.Reflection.AssemblyProductAttribute("RankUp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RankUp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

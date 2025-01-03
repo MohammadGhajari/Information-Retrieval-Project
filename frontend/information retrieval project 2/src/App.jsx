@@ -25,12 +25,15 @@ import { useSelector } from "react-redux";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { useEffect } from "react";
 import { GlobalStyles } from "@mui/material";
+import { setEmail, setName } from "./state management/userSlice";
+import { useDispatch } from "react-redux";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 export default function App() {
   const { email } = useSelector((state) => state.user);
   const { isDarkMode } = useSelector((state) => state.darkMode);
+  const dispatch = useDispatch();
 
   const theme = createTheme({
     components: {
@@ -132,6 +135,18 @@ export default function App() {
     },
     [isDarkMode]
   );
+
+  useEffect(() => {
+    if (localStorage.getItem("email")) {
+      dispatch(setEmail(localStorage.getItem("email")));
+      dispatch(setName(localStorage.getItem("name")));
+    }
+    // else {
+    //   dispatch(setEmail(localStorage.getItem("")));
+    //   dispatch(setName(localStorage.getItem("")));
+    // }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
