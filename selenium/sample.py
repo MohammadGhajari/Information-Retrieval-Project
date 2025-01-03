@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import time
+import sys
+import json
 
 service = webdriver.ChromeService(executable_path = 'chromedriver.exe')
 driver = webdriver.Chrome(service=service)
@@ -38,8 +40,20 @@ def get_link_rank(query, domain, num_pages=10):
 
     return domain_rank, recommended_queries
 
-query = "Python programming"
-rank, recommended_queries = get_link_rank(query=query, domain="codechef.com/learn/course/python", num_pages=10)
-print(rank, recommended_queries)
 
-driver.quit()
+if __name__ == "__main__":
+    input_data = sys.argv[1]
+    
+    try:
+        data = json.loads(input_data)
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON: {e}")
+        sys.exit(1)
+
+    domain = data.get("Sites")
+    query = data.get("Keywords")
+
+    rank, recommended_queries = get_link_rank(query=query, domain=domain, num_pages=10)
+    print(rank)
+    print(",".join(recommended_queries))
+    driver.quit()
