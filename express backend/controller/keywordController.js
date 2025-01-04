@@ -1,4 +1,5 @@
 const Keyword = require('./../model/keywordModel');
+const Query = require('./../model/queryModel');
 const {
   getOne,
   createOne,
@@ -36,8 +37,6 @@ exports.uploadKeyword = catchAsync(async (req, res, next) => {
       return next(err); // Handle any multer errors
     }
 
-    console.log(req.file);
-
     if (!req.file) {
       return res
         .status(400)
@@ -53,6 +52,10 @@ exports.uploadKeyword = catchAsync(async (req, res, next) => {
       const keyword = sheetData[i].keyword;
       const websites = sheetData[i].sites.split(', ');
       await Keyword.create({ name: keyword, websites });
+      //create queries
+      for (let j = 0; j < websites.length; j++) {
+        await Query.create({ query: keyword, website: websites[j] });
+      }
     }
 
     // Respond with the parsed data or process it as needed

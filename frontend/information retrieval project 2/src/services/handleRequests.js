@@ -185,21 +185,26 @@ export async function createKeywords(data) {
 }
 
 export async function uploadKeywords(file) {
-  try {
-    const res = await axios.post(`${domain}keywords/uploadKeywords`, file, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(res);
-  } catch (err) {
-    console.error(err);
-  }
+  return new Promise(async function (resolve, reject) {
+    try {
+      const res = await axios.post(`${domain}keywords/uploadKeywords`, file, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res);
+      if (res.data.status === "success") {
+        resolve("success");
+      }
+    } catch (err) {
+      toastError("Try again");
+    }
+  });
 }
 
-export async function getBarChart() {
+export async function getAllQueries() {
   try {
-    const res = await axios.get(`${domain}keywords`);
+    const res = await axios.get(`${domain}queries`);
     console.log(res);
     if (res.data.status === "success") {
       return res.data.data;

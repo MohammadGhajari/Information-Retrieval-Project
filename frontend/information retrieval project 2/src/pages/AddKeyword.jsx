@@ -77,11 +77,17 @@ export default function AddKeyword() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const res = await uploadKeywords(formData);
+      const res = await toast.promise(uploadKeywords(formData), {
+        pending: "Uploading file...🕑",
+        success: "File uploaded✅",
+        error: "Try again⚠️",
+      });
 
       if (res === "success") {
         setKeywordValue("");
         setSelectedWebsites([]);
+        setFile(null);
+        setUploadByFile(false);
       }
       return;
     } else {
@@ -171,7 +177,12 @@ export default function AddKeyword() {
           />
 
           <FormControlLabel
-            control={<Checkbox onChange={handleChangeCheckbox} />}
+            control={
+              <Checkbox
+                onChange={handleChangeCheckbox}
+                checked={uploadByFile}
+              />
+            }
             label="Upload file"
           />
 

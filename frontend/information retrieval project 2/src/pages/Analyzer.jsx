@@ -5,8 +5,8 @@ import styles from "./../styles/analyzer.module.css";
 import Loader from "./../components/loaders/Loader";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getBarChart } from "../services/handleRequests";
-import { filterBarChartData } from "../services/helper";
+import { getAllQueries } from "../services/handleRequests";
+import { filterBarChartData, filterTableData } from "../services/helper";
 
 function transformServerData(serverData) {
   return serverData.map((entry) => ({
@@ -214,10 +214,11 @@ export default function Analyzer() {
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
-      //fetch charts data
 
-      const rawBarCharData = await getBarChart();
-      setDataForBarChart([...filterBarChartData(rawBarCharData)]);
+      const allQueries = await getAllQueries();
+
+      setDataForBarChart([...filterBarChartData(allQueries)]);
+      setDataForTable([...filterTableData(allQueries)]);
 
       setIsLoading(false);
     }

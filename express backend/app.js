@@ -13,6 +13,7 @@ const errorController = require('./controller/errorController');
 const userRouter = require('./routes/userRoutes');
 const websiteRouter = require('./routes/websiteRoutes');
 const keywordRouter = require('./routes/keywordRoutes');
+const queryRouter = require('./routes/queryRoutes');
 
 //--------------------------MIDDLEWARES------------------------------
 app.use(morgan('dev'));
@@ -58,6 +59,7 @@ app.all('/', async (req, res, next) => {
 });
 
 app.use('/api/users', userRouter);
+app.use('/api/queries', queryRouter);
 app.use('/api/websites', websiteRouter);
 app.use('/api/keywords', keywordRouter);
 

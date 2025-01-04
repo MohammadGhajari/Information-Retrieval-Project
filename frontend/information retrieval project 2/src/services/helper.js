@@ -70,9 +70,27 @@ function aggregateData(data) {
 export function filterBarChartData(data) {
   const filtered = [];
   for (let i = 0; i < data.length; i++) {
-    const sample = { name: data[i].name, value: data[i].searchCount };
+    const sample = { name: data[i].query, value: data[i].searchPairs.length };
     filtered.push(sample);
   }
 
   return aggregateData(filtered);
+}
+
+export function filterTableData(data) {
+  const filtered = [];
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].searchPairs.length > 0) {
+      const sample = {
+        keyWord: data[i].query,
+        website: data[i].website,
+        minRank: data[i].minRank,
+        maxRank: data[i].maxRank,
+        avgRank: data[i].avgRank,
+        checkCount: data[i].searchPairs.length,
+      };
+      filtered.push(sample);
+    }
+  }
+  return filtered;
 }
