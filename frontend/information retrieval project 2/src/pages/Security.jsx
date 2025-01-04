@@ -7,12 +7,12 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Password, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { toastError, toastSuccess } from "./../services/notify";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../services/handleRequests";
+import { resetPassword } from "../services/handleRequests";
 import { setPassword } from "../state management/userSlice";
 
 export default function Security() {
@@ -39,19 +39,19 @@ export default function Security() {
     //then change the password
 
     const data = {
-      Email: email,
-      Name: name,
-      Profile: profile,
-      Password: newPassword,
+      password: currentPassword,
+      newPassword,
+      passwordConfirm: confirmPassword,
+      email,
     };
 
-    const res = await toast.promise(updateUser(data), {
+    const res = await toast.promise(resetPassword(data), {
       pending: "Changing password...",
       success: `Password changed successfully!!!`,
       error: "Try again.⚠️",
     });
-
-    if (res.status === "success") {
+    console.log(res);
+    if (res === "success") {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");

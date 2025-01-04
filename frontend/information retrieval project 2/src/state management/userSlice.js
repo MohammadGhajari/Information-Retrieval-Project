@@ -6,6 +6,7 @@ const initialState = {
   email: "",
   profile: "",
   password: "",
+  userID: "",
 };
 const userSlice = createSlice({
   name: "user",
@@ -23,8 +24,12 @@ const userSlice = createSlice({
     setPassword(state, action) {
       state.password = action.payload;
     },
+    setUserID(state, action) {
+      state.userID = action.payload;
+    },
   },
 });
-export const { setPassword, setProfile, setName, setEmail } = userSlice.actions;
+export const { setPassword, setProfile, setName, setEmail, setUserID } =
+  userSlice.actions;
 
 export default userSlice.reducer;

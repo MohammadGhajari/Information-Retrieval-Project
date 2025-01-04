@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import styles from "././../styles/delete-website.module.css";
+import { deleteWebsite, getWebsiteByDomain } from "../services/handleRequests";
 const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
   <Modal open={open} onClose={onClose}>
     <Box
@@ -76,21 +77,23 @@ export default function DeleteWebsite() {
   const [website, setWebsite] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleSearch = () => {
+  async function handleSearch() {
     if (!searchQuery) return;
 
-    if (searchQuery === "example.com") {
-      setWebsite({ name: "Example Website", domain: "example.com" });
-    } else {
-      setWebsite(null);
+    const res = await getWebsiteByDomain(searchQuery);
+    if (res) {
+      setWebsite({ ...res });
+      setSearchQuery("");
     }
-  };
+  }
 
-  const handleDelete = () => {
+  async function handleDelete() {
+    const res = await deleteWebsite({ ...website });
+    console.log("===============", res);
     setSearchQuery("");
     setWebsite(null);
     setModalOpen(false);
-  };
+  }
 
   return (
     <Box

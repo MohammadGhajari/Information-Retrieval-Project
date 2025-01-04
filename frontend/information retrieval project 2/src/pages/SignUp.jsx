@@ -45,9 +45,9 @@ export default function Signup() {
     //then sign up
 
     const data = {
-      Email: userEmail,
-      Password: password,
-      Name: "",
+      email: userEmail,
+      password,
+      passwordConfirm,
     };
 
     const status = await toast.promise(signUp(data), {

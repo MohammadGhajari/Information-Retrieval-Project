@@ -10,6 +10,7 @@ import {
   setName,
   setProfile,
   setPassword,
+  setUserID,
 } from "./../state management/userSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -38,11 +39,11 @@ export default function Login() {
     //then login
 
     const data = {
-      Email: userEmail,
-      Password: userPassword,
+      email: userEmail,
+      password: userPassword,
     };
 
-    const user = await toast.promise(login(data), {
+    const { user } = await toast.promise(login(data), {
       pending: "Logging In...",
       success: `Welcome ${userEmail}!👋`,
       error: "Try again.⚠️",
@@ -52,12 +53,15 @@ export default function Login() {
       dispatch(setEmail(user.email));
       dispatch(setName(user.name));
       dispatch(setProfile(user.profile));
+      console.log("id", user.id);
+      dispatch(setUserID(user.id));
       dispatch(setPassword(userPassword));
 
       localStorage.setItem("email", user.email);
       localStorage.setItem("name", user.name);
       localStorage.setItem("profile", user.profile);
       localStorage.setItem("password", userPassword);
+      localStorage.setItem("userID", user.id);
 
       navigate("/");
     }

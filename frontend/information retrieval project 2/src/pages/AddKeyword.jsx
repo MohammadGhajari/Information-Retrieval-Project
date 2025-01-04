@@ -14,11 +14,19 @@ import { FaFileCsv } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FormControl from "@mui/material/FormControl";
-import { MenuProps } from "../services/helper";
+import { extractParenthesesContent, MenuProps } from "../services/helper";
 import { useMediaQuery } from "@mui/material";
 import { toastError } from "./../services/notify";
 import { styled } from "@mui/material/styles";
 import Loader from "./../components/loaders/Loader";
+import {
+  createKeywords,
+  getAllWebsites,
+  uploadKeywords,
+} from "../services/handleRequests";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -35,21 +43,14 @@ const VisuallyHiddenInput = styled("input")({
 export default function AddKeyword() {
   const isSmallScreen = useMediaQuery("(max-width:500px)");
 
+  const { email } = useSelector((state) => state.user);
+
   const [file, setFile] = useState(null);
   const [keywordValue, setKeywordValue] = useState("");
-  const [allWebsites, setAllWebsites] = useState([
-    "Oliver Hansen",
-    "Van Henry",
-    "April Tucker",
-    "Ralph Hubbard",
-    "Omar Alexander",
-    "Carlos Abbott",
-    "Miriam Wagner",
-    "Bradley Wilkerson",
-    "Virginia Andrews",
-    "Kelly Snyder",
-  ]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [allWebsites, setAllWebsites] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [uploadByFile, setUploadByFile] = useState(false);
+  const [selectedWebsites, setSelectedWebsites] = useState([]);
 
   function handleChangeUpload(e) {
     setFile(e.target.files[0]);
@@ -57,37 +58,70 @@ export default function AddKeyword() {
   function handleDeleteFile() {
     setFile(null);
   }
-
-  const [selectedWebsites, setSelectedWebsites] = useState([]);
-
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
     setSelectedWebsites(typeof value === "string" ? value.split(",") : value);
   };
-
-  function handleSubmit(e) {
+  function handleChangeCheckbox() {
+    setUploadByFile(!uploadByFile);
+    setSelectedWebsites([]);
+    setKeywordValue("");
+    setFile(null);
+  }
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    if (selectedWebsites.length === 0)
-      return toastError("Please select a website");
+    if (uploadByFile) {
+      const formData = new FormData();
+      formData.append("file", file);
 
-    //then sent this data to server
-    const dataToSent = {
-      websites: selectedWebsites,
-      keywordValue: keywordValue,
-      file: file,
-    };
+      const res = await uploadKeywords(formData);
+
+      if (res === "success") {
+        setKeywordValue("");
+        setSelectedWebsites([]);
+      }
+      return;
+    } else {
+      if (selectedWebsites.length === 0)
+        return toastError("Please select a website");
+
+      const dataToSent = {
+        websites: extractParenthesesContent(selectedWebsites),
+        name: keywordValue,
+        file: file,
+      };
+
+      const res = await toast.promise(createKeywords(dataToSent), {
+        pending: "Adding keywords...🕑",
+        success: "Keywords added successfully✅",
+        error: "Try again⚠️",
+      });
+
+      if (res === "success") {
+        setKeywordValue("");
+        setSelectedWebsites([]);
+      }
+    }
   }
 
   useEffect(() => {
-    function fetchData() {
+    async function fetchData() {
       setIsLoading(true);
-      //fetch all the websites
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+
+      const res = await getAllWebsites({ email });
+      if (res.length > 0) {
+        const tempData = [];
+        for (let i = 0; i < res.length; i++) {
+          const sample = `${res[i].name}(${res[i].domain})`;
+          tempData.push(sample);
+        }
+        setAllWebsites(...[tempData]);
+      }
+
+      setIsLoading(false);
     }
 
     fetchData();
@@ -114,6 +148,7 @@ export default function AddKeyword() {
               input={<OutlinedInput label="Tag" />}
               renderValue={(selected) => selected.join(", ")}
               MenuProps={MenuProps}
+              disabled={uploadByFile}
             >
               {allWebsites.map((name) => (
                 <MenuItem key={name} value={name}>
@@ -131,35 +166,44 @@ export default function AddKeyword() {
             style={{ boxShadow: "var(--shadow-me-sm" }}
             size={isSmallScreen ? "small" : "medium"}
             onChange={(e) => setKeywordValue(e.target.value)}
+            value={keywordValue}
+            disabled={uploadByFile}
           />
-          <div className={styles["file-upload-container"]}>
-            <label>Upload file (optional):</label>
-            <div className={styles["file-picker-container"]}>
-              <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-              >
-                Upload file
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={handleChangeUpload}
-                />
-              </Button>
-              {file && (
-                <div className={styles["file-content"]}>
-                  <span>
-                    <FaFileCsv />
-                  </span>
-                  <span>
-                    <RiDeleteBin6Line onClick={handleDeleteFile} />
-                  </span>
-                </div>
-              )}
+
+          <FormControlLabel
+            control={<Checkbox onChange={handleChangeCheckbox} />}
+            label="Upload file"
+          />
+
+          {uploadByFile && (
+            <div className={styles["file-upload-container"]}>
+              <div className={styles["file-picker-container"]}>
+                <Button
+                  component="label"
+                  role={undefined}
+                  variant="contained"
+                  tabIndex={-1}
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Upload file
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={handleChangeUpload}
+                  />
+                </Button>
+                {file && (
+                  <div className={styles["file-content"]}>
+                    <span>
+                      <FaFileCsv />
+                    </span>
+                    <span>
+                      <RiDeleteBin6Line onClick={handleDeleteFile} />
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
           <Button
             variant="contained"
             color="primary"

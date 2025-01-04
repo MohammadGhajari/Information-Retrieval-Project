@@ -30,6 +30,7 @@ import {
   setName,
   setProfile,
   setPassword,
+  setUserID,
 } from "./state management/userSlice";
 import { useDispatch } from "react-redux";
 
@@ -147,6 +148,7 @@ export default function App() {
       dispatch(setName(localStorage.getItem("name")));
       dispatch(setProfile(localStorage.getItem("profile")));
       dispatch(setPassword(localStorage.getItem("password")));
+      dispatch(setUserID(localStorage.getItem("userID")));
     }
     // else {
     //   dispatch(setEmail(localStorage.getItem("")));

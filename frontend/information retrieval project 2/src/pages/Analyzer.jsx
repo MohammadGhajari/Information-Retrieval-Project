@@ -4,6 +4,20 @@ import CustomLineChart from "../components/charts/CustomLineChart";
 import styles from "./../styles/analyzer.module.css";
 import Loader from "./../components/loaders/Loader";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getBarChart } from "../services/handleRequests";
+import { filterBarChartData } from "../services/helper";
+
+function transformServerData(serverData) {
+  return serverData.map((entry) => ({
+    time: entry.hour, // Convert hour to 'time'
+    data: entry.siteDominAndQuery.map((item) => ({
+      website: item.siteDomin, // Rename siteDomin to website
+      keyword: item.query, // Rename query to keyword
+      value: item.rank, // Rename rank to value
+    })),
+  }));
+}
 
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -14,7 +28,9 @@ function getRandomColor() {
   return color;
 }
 export default function Analyzer() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { email } = useSelector((state) => state.user);
+
   const [dataForBarChart, setDataForBarChart] = useState([
     {
       name: "Item a",
@@ -127,79 +143,83 @@ export default function Analyzer() {
       checkCount: 10,
     },
   ]);
-  const [dataForLineChart, setDataForLineChart] = useState([
-    {
-      time: "day 1",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 100 },
-        { website: "website1", keyword: "keyword3", value: 200 },
-        { website: "website2", keyword: "keyword2", value: 150 },
-        { website: "website3", keyword: "keyword1", value: 150 },
-      ],
-    },
-    {
-      time: "day 2",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 150 },
-        { website: "website1", keyword: "keyword3", value: 250 },
-        { website: "website2", keyword: "keyword2", value: 350 },
-        { website: "website3", keyword: "keyword1", value: 250 },
-      ],
-    },
-    {
-      time: "day 3",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 400 },
-        { website: "website1", keyword: "keyword3", value: 200 },
-        { website: "website2", keyword: "keyword2", value: 50 },
-        { website: "website3", keyword: "keyword1", value: 50 },
-      ],
-    },
-    {
-      time: "day 4",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 50 },
-        { website: "website1", keyword: "keyword3", value: 100 },
-        { website: "website2", keyword: "keyword2", value: 300 },
-        { website: "website3", keyword: "keyword1", value: 190 },
-      ],
-    },
-    {
-      time: "day 5",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 200 },
-        { website: "website1", keyword: "keyword3", value: 300 },
-        { website: "website2", keyword: "keyword2", value: 400 },
-        { website: "website3", keyword: "keyword1", value: 350 },
-      ],
-    },
-    {
-      time: "day 6",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 200 },
-        { website: "website1", keyword: "keyword3", value: 600 },
-        { website: "website2", keyword: "keyword2", value: 450 },
-        { website: "website3", keyword: "keyword1", value: 450 },
-      ],
-    },
-    {
-      time: "day 7",
-      data: [
-        { website: "website1", keyword: "keyword1", value: 500 },
-        { website: "website1", keyword: "keyword3", value: 550 },
-        { website: "website2", keyword: "keyword2", value: 350 },
-        { website: "website3", keyword: "keyword1", value: 50 },
-      ],
-    },
-  ]);
+  // const [dataForLineChart, setDataForLineChart] = useState([
+  // {
+  //   time: "day 1",
+  //   data: [
+  //     { website: "website1", keyword: "keyword1", value: 100 },
+  //     { website: "website1", keyword: "keyword3", value: 200 },
+  //     { website: "website2", keyword: "keyword2", value: 150 },
+  //     { website: "website3", keyword: "keyword1", value: 150 },
+  //   ],
+  // },
+  //   {
+  //     time: "day 2",
+  //     data: [
+  //       { website: "website1", keyword: "keyword1", value: 150 },
+  //       { website: "website1", keyword: "keyword3", value: 250 },
+  //       { website: "website2", keyword: "keyword2", value: 350 },
+  //       { website: "website3", keyword: "keyword1", value: 250 },
+  //     ],
+  //   },
+  //   {
+  //     time: "day 3",
+  //     data: [
+  //       { website: "website1", keyword: "keyword1", value: 400 },
+  //       { website: "website1", keyword: "keyword3", value: 200 },
+  //       { website: "website2", keyword: "keyword2", value: 50 },
+  //       { website: "website3", keyword: "keyword1", value: 50 },
+  //     ],
+  //   },
+  //   {
+  //     time: "day 4",
+  //     data: [
+  //       { website: "website1", keyword: "keyword1", value: 50 },
+  //       { website: "website1", keyword: "keyword3", value: 100 },
+  //       { website: "website2", keyword: "keyword2", value: 300 },
+  //       { website: "website3", keyword: "keyword1", value: 190 },
+  //     ],
+  //   },
+  //   {
+  //     time: "day 5",
+  //     data: [
+  //       { website: "website1", keyword: "keyword1", value: 200 },
+  //       { website: "website1", keyword: "keyword3", value: 300 },
+  //       { website: "website2", keyword: "keyword2", value: 400 },
+  //       { website: "website3", keyword: "keyword1", value: 350 },
+  //     ],
+  //   },
+  //   {
+  //     time: "day 6",
+  //     data: [
+  //       { website: "website1", keyword: "keyword1", value: 200 },
+  //       { website: "website1", keyword: "keyword3", value: 600 },
+  //       { website: "website2", keyword: "keyword2", value: 450 },
+  //       { website: "website3", keyword: "keyword1", value: 450 },
+  //     ],
+  //   },
+  //   {
+  //     time: "day 7",
+  //     data: [
+  //       { website: "website1", keyword: "keyword1", value: 500 },
+  //       { website: "website1", keyword: "keyword3", value: 550 },
+  //       { website: "website2", keyword: "keyword2", value: 350 },
+  //       { website: "website3", keyword: "keyword1", value: 50 },
+  //     ],
+  //   },
+  // ]);
+
+  const [dataForLineChart, setDataForLineChart] = useState([]);
 
   useEffect(() => {
-    function fetchData() {
+    async function fetchData() {
       setIsLoading(true);
       //fetch charts data
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+
+      const rawBarCharData = await getBarChart();
+      setDataForBarChart([...filterBarChartData(rawBarCharData)]);
+
+      setIsLoading(false);
     }
     fetchData();
   }, []);
@@ -211,7 +231,7 @@ export default function Analyzer() {
         <div>
           <CustomBarChart data={dataForBarChart} />
           <CustomTable data={dataForTable} />
-          <CustomLineChart data={dataForLineChart} />
+          {/* <CustomLineChart data={dataForLineChart} /> */}
         </div>
       ) : (
         <Loader />

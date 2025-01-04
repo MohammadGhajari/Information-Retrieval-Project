@@ -16,12 +16,18 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsDarkMode } from "./../../state management/darkModeSlice.js";
-import { setEmail, setName } from "../../state management/userSlice.js";
+import {
+  setEmail,
+  setName,
+  setPassword,
+  setProfile,
+  setUserID,
+} from "../../state management/userSlice.js";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   // const [isDarkMode, setIsDarkMode] = useState(false);
-  const { email } = useSelector((state) => state.user);
+  const { email, profile } = useSelector((state) => state.user);
   const { isDarkMode } = useSelector((state) => state.darkMode);
 
   const dispatch = useDispatch();
@@ -34,8 +40,16 @@ export default function Header() {
   function handleLogout() {
     dispatch(setName(""));
     dispatch(setEmail(""));
+    dispatch(setProfile(""));
+    dispatch(setPassword(""));
+    dispatch(setUserID(""));
+
     localStorage.setItem("email", "");
     localStorage.setItem("name", "");
+    localStorage.setItem("profile", "");
+    localStorage.setItem("password", "");
+    localStorage.setItem("userID", "");
+
     navigate("/");
   }
   return (
@@ -81,7 +95,7 @@ export default function Header() {
             <div className={styles["profile-container"]}>
               <button
                 className={styles["img-container"]}
-                style={{ background: `URL('./../../../../profile.webp')` }}
+                style={{ background: `URL(${profile})` }}
               ></button>
 
               <div className={styles["menu-container"]}>

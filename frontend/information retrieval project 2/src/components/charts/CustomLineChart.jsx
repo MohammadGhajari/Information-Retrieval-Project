@@ -80,6 +80,7 @@ let COLORS = [
 COLORS = shuffleArray(COLORS);
 
 export default function CustomLineChart({ data }) {
+  console.log(data);
   const [dataForChart, setDataForChart] = useState([...refactorData(data)]);
   const [dataKeys, setDataKeys] = useState([
     ...Object.keys(dataForChart[0]).filter((key) => key !== "time"),
@@ -88,12 +89,8 @@ export default function CustomLineChart({ data }) {
     (key) => key !== "time"
   );
 
-  const maxSlider = Math.max(
-    ...[...refactorData(data)].map((d) => +d.time.slice(4))
-  );
-  const minSlider = Math.min(
-    ...[...refactorData(data)].map((d) => +d.time.slice(4))
-  );
+  const maxSlider = Math.max(...[...refactorData(data)].map((d) => d.time));
+  const minSlider = Math.min(...[...refactorData(data)].map((d) => d.time));
 
   const handleChangeSelect = (event) => {
     const {
@@ -108,7 +105,7 @@ export default function CustomLineChart({ data }) {
 
     const filteredData = [];
     [...refactorData(data)].forEach((d) => {
-      if (newValue[0] <= +d.time.slice(4) && +d.time.slice(4) <= newValue[1]) {
+      if (newValue[0] <= d.time && d.time <= newValue[1]) {
         filteredData.push(d);
       }
     });

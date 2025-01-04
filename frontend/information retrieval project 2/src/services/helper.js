@@ -18,6 +18,8 @@ export const shuffleArray = (array) => {
 };
 
 export function refactorData(data) {
+  console.log("----");
+  console.log(data);
   const refactoredData = [];
   data.forEach(function (d, i) {
     const sample = { time: d.time };
@@ -35,4 +37,42 @@ export function isValidDomain(input) {
     allow_underscores: false,
     allow_trailing_dot: false,
   });
+}
+
+export function extractParenthesesContent(arr) {
+  return arr
+    .map((item) => {
+      const match = item.match(/\((.*?)\)/);
+      return match ? match[1] : null;
+    })
+    .filter(Boolean);
+}
+
+function aggregateData(data) {
+  const result = [];
+
+  data.forEach((item) => {
+    // Find if the name already exists in the result array
+    const existing = result.find((entry) => entry.name === item.name);
+
+    if (existing) {
+      // If it exists, sum the values
+      existing.value += item.value;
+    } else {
+      // If not, add a new object to the result
+      result.push({ name: item.name, value: item.value });
+    }
+  });
+
+  return result;
+}
+
+export function filterBarChartData(data) {
+  const filtered = [];
+  for (let i = 0; i < data.length; i++) {
+    const sample = { name: data[i].name, value: data[i].searchCount };
+    filtered.push(sample);
+  }
+
+  return aggregateData(filtered);
 }

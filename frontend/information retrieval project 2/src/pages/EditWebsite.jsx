@@ -13,6 +13,8 @@ import styles from "./../styles/edit-website.module.css";
 import { useMediaQuery } from "@mui/material";
 import { toastError, toastSuccess } from "./../services/notify";
 import { isValidDomain } from "../services/helper";
+import { getWebsiteByDomain, updateWebsite } from "../services/handleRequests";
+import { toast } from "react-toastify";
 
 const ConfirmationModal = ({ open, onClose, onConfirm, website }) => (
   <Modal open={open} onClose={onClose}>
@@ -108,17 +110,16 @@ const EditWebsite = () => {
   const [updatedWebsite, setUpdatedWebsite] = useState(null);
 
   // fetch website
-  function handleSearch() {
+  async function handleSearch(e) {
+    e.preventDefault();
+
     setWebsite(null);
 
-    if (!searchQuery) return toastError("provide a search query");
+    if (!searchQuery) return;
+    const res = await getWebsiteByDomain(searchQuery);
 
-    //check if website with this domain exists
-    if (searchQuery === "example.com") {
-      setWebsite({ name: "Example Website", domain: "example.com" });
-      setSearchQuery("");
-    } else {
-      setWebsite(null);
+    if (res.domain) {
+      setWebsite({ domain: res.domain, name: res.name, id: res.id });
     }
   }
 
@@ -131,14 +132,46 @@ const EditWebsite = () => {
     setModalOpen(true);
   };
 
-  const handleSave = () => {
-    setWebsite(null);
-    setUpdatedWebsite(null);
-    setModalOpen(false);
-    setIsEditing(false);
+  async function handleSave() {
+    try {
+      if (updatedWebsite.domain === website.domain) {
+        const res = await toast.promise(
+          updateWebsite({ id: website.id, name: updatedWebsite.name }),
+          {
+            pending: "Updating website...🕑",
+            success: "Updated successfully✅",
+            error: "Try again⚠️",
+          }
+        );
+        console.log(res);
+      } else {
+        const res = await toast.promise(
+          updateWebsite({
+            id: website.id,
+            name: updatedWebsite.name,
+            domain: updatedWebsite.domain,
+          }),
+          {
+            pending: "Updating website...🕑",
+            success: "Updated successfully✅",
+            error: "Try again⚠️",
+          }
+        );
+        console.log(res);
+      }
 
-    toastSuccess("Website updated successfully");
-  };
+      setWebsite(null);
+      setUpdatedWebsite(null);
+      setModalOpen(false);
+      setIsEditing(false);
+      setSearchQuery("");
+
+      toastSuccess("Website updated successfully");
+    } catch (e) {
+    } finally {
+      setModalOpen(false);
+    }
+  }
 
   return (
     <Box
@@ -162,6 +195,7 @@ const EditWebsite = () => {
         flexDirection={"column"}
         gap={2}
         alignItems="center"
+        onSubmit={handleSearch}
       >
         <TextField
           label="Enter website domain"
@@ -174,7 +208,6 @@ const EditWebsite = () => {
         />
         <Button
           variant="contained"
-          onClick={handleSearch}
           sx={{ height: "100%", width: "100%" }}
           size={useMediaQuery("(max-width:450px)") ? "small" : "medium"}
         >
