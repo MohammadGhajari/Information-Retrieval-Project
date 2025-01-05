@@ -1,0 +1,50 @@
+[
+  {
+    "query": "hello world",
+    "website": "google.com",
+    "searchPairs": [
+      { "time": 1736157133616, "rank": 5 },
+      { "time": 1736257134616, "rank": 3 },
+      { "time": 1736357135616, "rank": 5 },
+      { "time": 1736557136616, "rank": 2 },
+      { "time": 1736657137616, "rank": 1 },
+      { "time": 1736757138616, "rank": 4 }
+    ]
+  },
+  {
+    "query": "sunglass",
+    "website": "digikala.com",
+    "searchPairs": [
+      { "time": 1736157133616, "rank": 1 },
+      { "time": 1736257134616, "rank": 8 },
+      { "time": 1736357135616, "rank": 2 },
+      { "time": 1736557136616, "rank": 9 },
+      { "time": 1736657137616, "rank": 12 },
+      { "time": 1736757138616, "rank": 15 },
+      { "time": 1736857138616, "rank": 15 }
+    ]
+  },
+  {
+    "query": "laptop",
+    "website": "digikala.com",
+    "searchPairs": [
+      { "time": 1736157133616, "rank": 10 },
+      { "time": 1736257134616, "rank": 25 },
+      { "time": 1736557136616, "rank": 6 },
+      { "time": 1736657137616, "rank": 14 },
+      { "time": 1736757138616, "rank": 12 }
+    ]
+  },
+  {
+    "query": "mobile",
+    "website": "digikala.com",
+    "searchPairs": [
+      { "time": 1736157133616, "rank": 6 },
+      { "time": 1736257134616, "rank": 8 },
+      { "time": 1736357135616, "rank": 15 },
+      { "time": 1736557136616, "rank": 36 },
+      { "time": 1736657137616, "rank": 12 },
+      { "time": 1736757138616, "rank": 4 }
+    ]
+  }
+]

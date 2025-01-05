@@ -205,7 +205,6 @@ export async function uploadKeywords(file) {
 export async function getAllQueries() {
   try {
     const res = await axios.get(`${domain}queries`);
-    console.log(res);
     if (res.data.status === "success") {
       return res.data.data;
     }

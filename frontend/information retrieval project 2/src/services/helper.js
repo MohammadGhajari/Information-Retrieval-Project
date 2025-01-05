@@ -1,3 +1,4 @@
+import { all } from "axios";
 import validator from "validator";
 
 export const MenuProps = {
@@ -18,8 +19,6 @@ export const shuffleArray = (array) => {
 };
 
 export function refactorData(data) {
-  console.log("----");
-  console.log(data);
   const refactoredData = [];
   data.forEach(function (d, i) {
     const sample = { time: d.time };
@@ -92,5 +91,59 @@ export function filterTableData(data) {
       filtered.push(sample);
     }
   }
+  return filtered;
+}
+
+function formatTimestampToDate(timestamp) {
+  const date = new Date(timestamp);
+
+  const month = date.getUTCMonth() + 1; // Months are 0-indexed, so add 1
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear();
+
+  return `${month}/${day}/${year}`;
+}
+
+function aggregateAndSortDates(dates) {
+  // Use a Set to remove duplicates and retain unique dates
+  const uniqueDates = [...new Set(dates)];
+
+  // Sort the dates chronologically
+  uniqueDates.sort((a, b) => new Date(a) - new Date(b));
+
+  return uniqueDates;
+}
+
+export function filterLineChartData(data) {
+  console.log(data);
+  const filtered = [];
+  let allDays = [];
+  for (let i = 0; i < data.length; i++) {
+    for (let j = 0; j < data[i].searchPairs.length; j++) {
+      allDays.push(formatTimestampToDate(data[i].searchPairs[j].time));
+    }
+  }
+  console.log(allDays);
+  allDays = aggregateAndSortDates(allDays);
+  console.log(allDays);
+
+  for (let i = 0; i < allDays.length; i++) {
+    const sample = { time: allDays[i], data: [] };
+    for (let j = 0; j < data.length; j++) {
+      for (let k = 0; k < data[j].searchPairs.length; k++) {
+        if (formatTimestampToDate(data[j].searchPairs[k].time) === allDays[i]) {
+          const sampleData = {
+            keyword: data[j].query,
+            website: data[j].website,
+            value: data[j].searchPairs[k].rank,
+          };
+          sample.data.push(sampleData);
+        }
+      }
+    }
+    filtered.push(sample);
+  }
+  console.log(filtered);
+
   return filtered;
 }

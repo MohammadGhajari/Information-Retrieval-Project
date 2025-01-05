@@ -6,7 +6,11 @@ import Loader from "./../components/loaders/Loader";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getAllQueries } from "../services/handleRequests";
-import { filterBarChartData, filterTableData } from "../services/helper";
+import {
+  filterBarChartData,
+  filterTableData,
+  filterLineChartData,
+} from "../services/helper";
 
 function transformServerData(serverData) {
   return serverData.map((entry) => ({
@@ -61,88 +65,7 @@ export default function Analyzer() {
       value: 4300,
     },
   ]);
-  const [dataForTable, setDataForTable] = useState([
-    {
-      keyWord: "Tesla",
-      website: "test.com",
-      minRank: 2,
-      maxRank: 10,
-      avgRank: 4,
-      checkCount: 10,
-    },
-    {
-      keyWord: "harry potter",
-      website: "hary.com",
-      minRank: 5,
-      maxRank: 50,
-      avgRank: 15,
-      checkCount: 15,
-    },
-    {
-      keyWord: "harry potter",
-      website: "hary.com",
-      minRank: 5,
-      maxRank: 50,
-      avgRank: 15,
-      checkCount: 15,
-    },
-    {
-      keyWord: "harry potter",
-      website: "hary.com",
-      minRank: 5,
-      maxRank: 50,
-      avgRank: 15,
-      checkCount: 15,
-    },
-    {
-      keyWord: "ring of power",
-      website: "ring.ir",
-      minRank: 1,
-      maxRank: 16,
-      avgRank: 5,
-      checkCount: 12,
-    },
-    {
-      keyWord: "ring of power",
-      website: "ring.ir",
-      minRank: 1,
-      maxRank: 16,
-      avgRank: 5,
-      checkCount: 12,
-    },
-    {
-      keyWord: "ring of power",
-      website: "ring.ir",
-      minRank: 1,
-      maxRank: 16,
-      avgRank: 5,
-      checkCount: 12,
-    },
-    {
-      keyWord: "ring of power",
-      website: "ring.ir",
-      minRank: 1,
-      maxRank: 16,
-      avgRank: 5,
-      checkCount: 12,
-    },
-    {
-      keyWord: "Tesla",
-      website: "test.com",
-      minRank: 2,
-      maxRank: 10,
-      avgRank: 4,
-      checkCount: 10,
-    },
-    {
-      keyWord: "Tesla",
-      website: "test.com",
-      minRank: 2,
-      maxRank: 10,
-      avgRank: 4,
-      checkCount: 10,
-    },
-  ]);
+  const [dataForTable, setDataForTable] = useState();
   // const [dataForLineChart, setDataForLineChart] = useState([
   // {
   //   time: "day 1",
@@ -208,7 +131,6 @@ export default function Analyzer() {
   //     ],
   //   },
   // ]);
-
   const [dataForLineChart, setDataForLineChart] = useState([]);
 
   useEffect(() => {
@@ -219,7 +141,7 @@ export default function Analyzer() {
 
       setDataForBarChart([...filterBarChartData(allQueries)]);
       setDataForTable([...filterTableData(allQueries)]);
-
+      setDataForLineChart([...filterLineChartData(allQueries)]);
       setIsLoading(false);
     }
     fetchData();
@@ -232,7 +154,7 @@ export default function Analyzer() {
         <div>
           <CustomBarChart data={dataForBarChart} />
           <CustomTable data={dataForTable} />
-          {/* <CustomLineChart data={dataForLineChart} /> */}
+          <CustomLineChart data={dataForLineChart} />
         </div>
       ) : (
         <Loader />
