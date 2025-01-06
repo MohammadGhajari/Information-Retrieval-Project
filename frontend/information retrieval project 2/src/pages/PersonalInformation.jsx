@@ -28,7 +28,6 @@ const CircleAvatar = styled(Avatar)({
 
 export default function PersonalInformation() {
   const { email, name, profile, userID } = useSelector((state) => state.user);
-  console.log(profile);
 
   const [profilePhoto, setProfilePhoto] = useState(profile);
   const [userName, setUserName] = useState(name || "");
@@ -63,9 +62,6 @@ export default function PersonalInformation() {
     setIsEditingName(!isEditingName);
 
     if (isEditingName) {
-      console.log(userName);
-      console.log(userEmail);
-
       const data = {
         name: userName,
         id: userID,
@@ -75,7 +71,6 @@ export default function PersonalInformation() {
         success: `User name updated successfully`,
         error: "Try again.⚠️",
       });
-      console.log(res);
       if (res === "success") {
         dispatch(setName(userName));
         localStorage.setItem("name", userName);
@@ -86,7 +81,6 @@ export default function PersonalInformation() {
     setIsEditingEmail(true);
 
     if (isEditingEmail) {
-      console.log(userEmail);
       if (!validator.isEmail(userEmail)) return toastError("Not a valid email");
 
       const data = {
@@ -98,8 +92,6 @@ export default function PersonalInformation() {
         success: `Email updated successfully`,
         error: "Try again.⚠️",
       });
-
-      console.log(res);
 
       if (res === "success") {
         setIsEditingEmail(!isEditingEmail);
@@ -124,6 +116,7 @@ export default function PersonalInformation() {
         Personal Information
       </Typography>
 
+      {/* <div style={{ backgroundColor: "red" }}> */}
       <div className={styles["profile-container"]}>
         <label htmlFor="profile-photo-input">
           <CircleAvatar src={profilePhoto} alt="Profile Photo">
@@ -140,6 +133,7 @@ export default function PersonalInformation() {
           }}
         />
       </div>
+      {/* </div> */}
 
       <Box
         sx={{

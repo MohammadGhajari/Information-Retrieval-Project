@@ -6,15 +6,6 @@ const keywordSchema = new mongoose.Schema(
       type: String,
       required: [true, 'website should have a name'],
     },
-    minRank: {
-      type: Number,
-    },
-    maxRank: {
-      type: Number,
-    },
-    avgRank: {
-      type: Number,
-    },
     searchCount: { type: Number, default: 0 },
     websites: {
       type: [String],

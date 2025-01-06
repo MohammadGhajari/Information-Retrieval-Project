@@ -143,7 +143,6 @@ const EditWebsite = () => {
             error: "Try again⚠️",
           }
         );
-        console.log(res);
       } else {
         const res = await toast.promise(
           updateWebsite({

@@ -26,7 +26,24 @@ const upload = multer({
 const uploadSingle = upload.single('file'); // Expecting a 'file' field in the request
 
 exports.getKeyword = getOne(Keyword);
-exports.createKeyword = createOne(Keyword);
+exports.createKeyword = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  const query = Keyword.create(req.body);
+  const newDoc = await query;
+
+  // create query in query model
+  for (let i = 0; i < req.body.websites.length; i++) {
+    await Query.create({
+      query: req.body.name,
+      website: req.body.websites[i],
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: newDoc,
+  });
+});
 exports.getAllKeywords = getAll(Keyword);
 exports.deleteKeyword = deleteOne(Keyword);
 exports.updateKeyword = updateOne(Keyword);

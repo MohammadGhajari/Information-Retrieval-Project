@@ -1,5 +1,6 @@
 .profile-container {
   width: "max-content";
+  max-width: fit-content;
 }
 @media (max-width: 500px) {
   .container {

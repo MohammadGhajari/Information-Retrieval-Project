@@ -9,7 +9,6 @@ export async function signUp(data) {
       const res = await axios.post(`${domain}users/signup`, data, {
         withCredentials: true,
       });
-      console.log(res);
       if (res.status === 201) {
         resolve("success");
       }
@@ -25,7 +24,6 @@ export async function login(data) {
       const res = await axios.post(`${domain}users/login`, data, {
         withCredentials: true,
       });
-      console.log(res);
 
       if (res.data.status !== "fail") {
         resolve(res.data.data);
@@ -48,7 +46,6 @@ export async function updateUser(data) {
         }
       );
 
-      console.log(res);
       if (res.data.status === "success") {
         resolve("success");
       } else if (res.data.error.codeName === "DuplicateKey") {
@@ -68,7 +65,6 @@ export async function resetPassword(data) {
         withCredentials: true,
       });
 
-      console.log(res);
       if (res.status === 200) {
         resolve("success");
       }
@@ -87,7 +83,6 @@ export async function addWebsite(data) {
       const res = await axios.post(`${domain}websites`, data, {
         withCredentials: true,
       });
-      console.log(res);
       if (res.data.status === "success") {
         resolve("success");
       } else if (res.data.status === "error") {
@@ -103,7 +98,6 @@ export async function addWebsite(data) {
 export async function updateWebsite(website) {
   return new Promise(async function (resolve, reject) {
     try {
-      console.log(website);
       const res = await axios.patch(
         `${domain}websites/${website.id}`,
         { ...website },
@@ -111,7 +105,6 @@ export async function updateWebsite(website) {
           withCredentials: true,
         }
       );
-      console.log(res);
 
       if (res.data.status === "success") {
         resolve("success");
@@ -129,7 +122,6 @@ export async function deleteWebsite(website) {
       const res = await axios.delete(`${domain}websites/${website.id}`, {
         withCredentials: true,
       });
-      console.log(res);
 
       if (res.data.status !== "fail") {
         resolve("success");
@@ -143,7 +135,6 @@ export async function deleteWebsite(website) {
 export async function getWebsiteByDomain(websiteDomain) {
   try {
     const res = await axios.get(`${domain}websites?domain=${websiteDomain}`);
-    console.log(res.data.data.length);
     if (res.data.status === "success" && res.data.data.length !== 0) {
       return res.data.data[0];
     } else if (res.data.data.length === 0) {
@@ -157,7 +148,6 @@ export async function getWebsiteByDomain(websiteDomain) {
 export async function getAllWebsites() {
   try {
     const res = await axios.get(`${domain}websites`);
-    console.log(res);
     if (res.data.status === "success") {
       return res.data.data;
     }
@@ -172,8 +162,6 @@ export async function createKeywords(data) {
       const res = await axios.post(`${domain}keywords`, data, {
         withCredentials: true,
       });
-
-      console.log(res);
 
       if (res.data.status === "success") {
         resolve("success");
@@ -192,7 +180,6 @@ export async function uploadKeywords(file) {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res);
       if (res.data.status === "success") {
         resolve("success");
       }
@@ -206,7 +193,14 @@ export async function getAllQueries() {
   try {
     const res = await axios.get(`${domain}queries`);
     if (res.data.status === "success") {
-      return res.data.data;
+      //return just queries that fired
+      const filteredQueries = [];
+      for (let i = 0; i < res.data.data.length; i++) {
+        if (res.data.data[i].searchPairs.length > 0) {
+          filteredQueries.push(res.data.data[i]);
+        }
+      }
+      return filteredQueries;
     }
   } catch (err) {
     console.error(err);

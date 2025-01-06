@@ -89,7 +89,6 @@ export default function DeleteWebsite() {
 
   async function handleDelete() {
     const res = await deleteWebsite({ ...website });
-    console.log("===============", res);
     setSearchQuery("");
     setWebsite(null);
     setModalOpen(false);

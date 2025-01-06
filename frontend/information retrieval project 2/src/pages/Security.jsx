@@ -50,7 +50,6 @@ export default function Security() {
       success: `Password changed successfully!!!`,
       error: "Try again.⚠️",
     });
-    console.log(res);
     if (res === "success") {
       setCurrentPassword("");
       setNewPassword("");

@@ -33,104 +33,10 @@ function getRandomColor() {
 }
 export default function Analyzer() {
   const [isLoading, setIsLoading] = useState(true);
-  const { email } = useSelector((state) => state.user);
+  const [isDataExists, setIsDataExists] = useState(false);
 
-  const [dataForBarChart, setDataForBarChart] = useState([
-    {
-      name: "Item a",
-      value: 2400,
-    },
-    {
-      name: "item b",
-      value: 1398,
-    },
-    {
-      name: "item c",
-      value: 9800,
-    },
-    {
-      name: "item d",
-      value: 3908,
-    },
-    {
-      name: "item e",
-      value: 4800,
-    },
-    {
-      name: "item f",
-      value: 3800,
-    },
-    {
-      name: "item g",
-      value: 4300,
-    },
-  ]);
+  const [dataForBarChart, setDataForBarChart] = useState([]);
   const [dataForTable, setDataForTable] = useState();
-  // const [dataForLineChart, setDataForLineChart] = useState([
-  // {
-  //   time: "day 1",
-  //   data: [
-  //     { website: "website1", keyword: "keyword1", value: 100 },
-  //     { website: "website1", keyword: "keyword3", value: 200 },
-  //     { website: "website2", keyword: "keyword2", value: 150 },
-  //     { website: "website3", keyword: "keyword1", value: 150 },
-  //   ],
-  // },
-  //   {
-  //     time: "day 2",
-  //     data: [
-  //       { website: "website1", keyword: "keyword1", value: 150 },
-  //       { website: "website1", keyword: "keyword3", value: 250 },
-  //       { website: "website2", keyword: "keyword2", value: 350 },
-  //       { website: "website3", keyword: "keyword1", value: 250 },
-  //     ],
-  //   },
-  //   {
-  //     time: "day 3",
-  //     data: [
-  //       { website: "website1", keyword: "keyword1", value: 400 },
-  //       { website: "website1", keyword: "keyword3", value: 200 },
-  //       { website: "website2", keyword: "keyword2", value: 50 },
-  //       { website: "website3", keyword: "keyword1", value: 50 },
-  //     ],
-  //   },
-  //   {
-  //     time: "day 4",
-  //     data: [
-  //       { website: "website1", keyword: "keyword1", value: 50 },
-  //       { website: "website1", keyword: "keyword3", value: 100 },
-  //       { website: "website2", keyword: "keyword2", value: 300 },
-  //       { website: "website3", keyword: "keyword1", value: 190 },
-  //     ],
-  //   },
-  //   {
-  //     time: "day 5",
-  //     data: [
-  //       { website: "website1", keyword: "keyword1", value: 200 },
-  //       { website: "website1", keyword: "keyword3", value: 300 },
-  //       { website: "website2", keyword: "keyword2", value: 400 },
-  //       { website: "website3", keyword: "keyword1", value: 350 },
-  //     ],
-  //   },
-  //   {
-  //     time: "day 6",
-  //     data: [
-  //       { website: "website1", keyword: "keyword1", value: 200 },
-  //       { website: "website1", keyword: "keyword3", value: 600 },
-  //       { website: "website2", keyword: "keyword2", value: 450 },
-  //       { website: "website3", keyword: "keyword1", value: 450 },
-  //     ],
-  //   },
-  //   {
-  //     time: "day 7",
-  //     data: [
-  //       { website: "website1", keyword: "keyword1", value: 500 },
-  //       { website: "website1", keyword: "keyword3", value: 550 },
-  //       { website: "website2", keyword: "keyword2", value: 350 },
-  //       { website: "website3", keyword: "keyword1", value: 50 },
-  //     ],
-  //   },
-  // ]);
   const [dataForLineChart, setDataForLineChart] = useState([]);
 
   useEffect(() => {
@@ -138,10 +44,12 @@ export default function Analyzer() {
       setIsLoading(true);
 
       const allQueries = await getAllQueries();
-
-      setDataForBarChart([...filterBarChartData(allQueries)]);
-      setDataForTable([...filterTableData(allQueries)]);
-      setDataForLineChart([...filterLineChartData(allQueries)]);
+      if (allQueries.length > 0) {
+        setIsDataExists(true);
+        setDataForBarChart([...filterBarChartData(allQueries)]);
+        setDataForTable([...filterTableData(allQueries)]);
+        setDataForLineChart([...filterLineChartData(allQueries)]);
+      }
       setIsLoading(false);
     }
     fetchData();
@@ -151,11 +59,15 @@ export default function Analyzer() {
     <div className={styles["container"]}>
       <h1>Website Analyzer</h1>
       {!isLoading ? (
-        <div>
-          <CustomBarChart data={dataForBarChart} />
-          <CustomTable data={dataForTable} />
-          <CustomLineChart data={dataForLineChart} />
-        </div>
+        isDataExists ? (
+          <div>
+            <CustomBarChart data={dataForBarChart} />
+            <CustomTable data={dataForTable} />
+            <CustomLineChart data={dataForLineChart} />
+          </div>
+        ) : (
+          <h1 style={{ alignSelf: "center" }}>There is no data</h1>
+        )
       ) : (
         <Loader />
       )}

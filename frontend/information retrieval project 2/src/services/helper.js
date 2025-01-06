@@ -97,25 +97,26 @@ export function filterTableData(data) {
 function formatTimestampToDate(timestamp) {
   const date = new Date(timestamp);
 
-  const month = date.getUTCMonth() + 1; // Months are 0-indexed, so add 1
-  const day = date.getUTCDate();
-  const year = date.getUTCFullYear();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(Math.round(date.getMinutes() / 10) * 10).padStart(
+    2,
+    "0"
+  );
 
-  return `${month}/${day}/${year}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
 function aggregateAndSortDates(dates) {
-  // Use a Set to remove duplicates and retain unique dates
   const uniqueDates = [...new Set(dates)];
-
-  // Sort the dates chronologically
   uniqueDates.sort((a, b) => new Date(a) - new Date(b));
 
   return uniqueDates;
 }
 
 export function filterLineChartData(data) {
-  console.log(data);
   const filtered = [];
   let allDays = [];
   for (let i = 0; i < data.length; i++) {
@@ -123,27 +124,27 @@ export function filterLineChartData(data) {
       allDays.push(formatTimestampToDate(data[i].searchPairs[j].time));
     }
   }
-  console.log(allDays);
   allDays = aggregateAndSortDates(allDays);
-  console.log(allDays);
 
   for (let i = 0; i < allDays.length; i++) {
-    const sample = { time: allDays[i], data: [] };
+    // const sample = { time: allDays[i], data: [] };
+    const sample = { time: allDays[i] };
     for (let j = 0; j < data.length; j++) {
       for (let k = 0; k < data[j].searchPairs.length; k++) {
         if (formatTimestampToDate(data[j].searchPairs[k].time) === allDays[i]) {
-          const sampleData = {
-            keyword: data[j].query,
-            website: data[j].website,
-            value: data[j].searchPairs[k].rank,
-          };
-          sample.data.push(sampleData);
+          // const sampleData = {
+          //   keyword: data[j].query,
+          //   website: data[j].website,
+          //   value: data[j].searchPairs[k].rank,
+          // };
+          // sample.data.push(sampleData);
+          sample[`${data[j].query}(${data[j].website})`] =
+            data[j].searchPairs[k].rank;
         }
       }
     }
     filtered.push(sample);
   }
-  console.log(filtered);
 
   return filtered;
 }

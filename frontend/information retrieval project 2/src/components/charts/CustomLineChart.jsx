@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -7,22 +6,20 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  AreaChart,
+  Brush,
   ResponsiveContainer,
-  Area,
 } from "recharts";
-import { useState } from "react";
+import { format, parseISO } from "date-fns";
+import { shuffleArray, MenuProps } from "../../services/helper";
 import styles from "./../../styles/custom-line-chart.module.css";
-import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Slider from "@mui/material/Slider";
-import { MenuProps, shuffleArray, refactorData } from "../../services/helper";
-import { useMediaQuery } from "@mui/material";
+import { useState } from "react";
+import Select from "@mui/material/Select";
 
 let COLORS = [
   "#D51054",
@@ -80,17 +77,14 @@ let COLORS = [
 COLORS = shuffleArray(COLORS);
 
 export default function CustomLineChart({ data }) {
-  console.log(data);
-  const [dataForChart, setDataForChart] = useState([...refactorData(data)]);
-  const [dataKeys, setDataKeys] = useState([
-    ...Object.keys(dataForChart[0]).filter((key) => key !== "time"),
-  ]);
-  const allDataKeys = Object.keys(refactorData(data)[0]).filter(
-    (key) => key !== "time"
-  );
+  let allDataKeys = [];
+  for (let i = 0; i < data.length; i++) {
+    const tempKeys = Object.keys(data[i]);
+    allDataKeys.push(...tempKeys);
+  }
+  allDataKeys = [...new Set(allDataKeys)].filter((key) => key !== "time");
 
-  const maxSlider = Math.max(...[...refactorData(data)].map((d) => d.time));
-  const minSlider = Math.min(...[...refactorData(data)].map((d) => d.time));
+  const [dataKeys, setDataKeys] = useState([...allDataKeys]);
 
   const handleChangeSelect = (event) => {
     const {
@@ -99,37 +93,9 @@ export default function CustomLineChart({ data }) {
     setDataKeys(value);
   };
 
-  const [sliderValue, setSliderValueValue] = useState([minSlider, maxSlider]);
-  const handleChangeSlider = (event, newValue) => {
-    setSliderValueValue(newValue);
-
-    const filteredData = [];
-    [...refactorData(data)].forEach((d) => {
-      if (newValue[0] <= d.time && d.time <= newValue[1]) {
-        filteredData.push(d);
-      }
-    });
-    setDataForChart(filteredData);
-  };
-
   return (
     <div className={styles["container"]}>
       <h2>Keyword rank changes</h2>
-      <div
-        style={{
-          width: "93%",
-          marginLeft: "1rem",
-        }}
-      >
-        <h3>Time range filter</h3>
-        <Slider
-          min={minSlider}
-          max={maxSlider}
-          value={sliderValue}
-          onChange={handleChangeSlider}
-          valueLabelDisplay="auto"
-        />
-      </div>
       <FormControl>
         <InputLabel id="demo-multiple-checkbox-label" size="small">
           Items
@@ -154,53 +120,35 @@ export default function CustomLineChart({ data }) {
           ))}
         </Select>
       </FormControl>
-      {/* 
-      <AreaChart
-        width={950}
-        height={300}
-        data={dataForChart}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="time" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        {dataKeys.map((key, i) => (
-          <Area
-            key={key}
-            type="monotone"
-            dataKey={key}
-            stroke={COLORS[i % COLORS.length]}
-            fill={COLORS[i % COLORS.length]}
-            strokeWidth={3}
-            fillOpacity={0.3}
-          />
-        ))}
-      </AreaChart> */}
-      <ResponsiveContainer height={300} width={"100%"}>
+      <ResponsiveContainer width="100%" height={400}>
         <LineChart
-          // width={950}
-          // height={300}
-          data={dataForChart}
+          data={data}
+          margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
         >
+          <Brush
+            dataKey="time"
+            height={20}
+            stroke="var(--color-primary-tint-1)"
+          />
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time" />
-          {!useMediaQuery("(max-width:500px)") && <YAxis />}
-          <Tooltip />
+          <XAxis
+            dataKey="time"
+            tickFormatter={(time) => format(parseISO(time), "HH:mm")}
+          />
+          <YAxis />
+          <Tooltip
+            labelFormatter={(time) =>
+              format(parseISO(time), "yyyy-MM-dd HH:mm")
+            }
+          />
           <Legend />
+
           {dataKeys.map((key, i) => (
             <Line
               key={key}
               type="monotone"
               dataKey={key}
               stroke={COLORS[i % COLORS.length]}
-              strokeWidth={2}
             />
           ))}
         </LineChart>

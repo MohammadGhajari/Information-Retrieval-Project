@@ -53,7 +53,6 @@ export default function Login() {
       dispatch(setEmail(user.email));
       dispatch(setName(user.name));
       dispatch(setProfile(user.profile));
-      console.log("id", user.id);
       dispatch(setUserID(user.id));
       dispatch(setPassword(userPassword));
 
